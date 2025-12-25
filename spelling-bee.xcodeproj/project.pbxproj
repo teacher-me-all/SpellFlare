@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD002EFB0001009167B7 /* StoreManager.swift */; };
+		53B2CD032EFB0002009167B7 /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD022EFB0002009167B7 /* AdManager.swift */; };
+		53B2CD052EFB0003009167B7 /* ParentGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD042EFB0003009167B7 /* ParentGateView.swift */; };
+		53B2CD072EFB0004009167B7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD062EFB0004009167B7 /* StoreManager.swift */; };
 		53B2CB512EFA4E17009167B7 /* spelling-bee Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 53B2CB502EFA4E17009167B7 /* spelling-bee Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		53B2CB562EFA4E17009167B7 /* spelling_beeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB552EFA4E17009167B7 /* spelling_beeApp.swift */; };
 		53B2CB582EFA4E17009167B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB572EFA4E17009167B7 /* ContentView.swift */; };
@@ -85,6 +89,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		53B2CD002EFB0001009167B7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		53B2CD022EFB0002009167B7 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
+		53B2CD042EFB0003009167B7 /* ParentGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentGateView.swift; sourceTree = "<group>"; };
+		53B2CD062EFB0004009167B7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		53B2CB4A2EFA4E17009167B7 /* spelling-bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53B2CB502EFA4E17009167B7 /* spelling-bee Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53B2CB552EFA4E17009167B7 /* spelling_beeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_beeApp.swift; sourceTree = "<group>"; };
@@ -238,6 +246,7 @@
 				53B2CB882EFA5002009167B7 /* WordBankService.swift */,
 				53B2CB8A2EFA5003009167B7 /* SpeechService.swift */,
 				53B2CB8C2EFA5004009167B7 /* PersistenceService.swift */,
+				53B2CD062EFB0004009167B7 /* StoreManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -317,6 +326,8 @@
 				53B2CC142EFA6004009167B7 /* SpeechService.swift */,
 				53B2CC152EFA6005009167B7 /* WordBankService.swift */,
 				53B2CC162EFA6006009167B7 /* PersistenceService.swift */,
+				53B2CD002EFB0001009167B7 /* StoreManager.swift */,
+				53B2CD022EFB0002009167B7 /* AdManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -336,8 +347,17 @@
 				53B2CC252EFA6015009167B7 /* Onboarding */,
 				53B2CC262EFA6016009167B7 /* Home */,
 				53B2CC272EFA6017009167B7 /* Game */,
+				53B2CD082EFB0005009167B7 /* Common */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		53B2CD082EFB0005009167B7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CD042EFB0003009167B7 /* ParentGateView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		53B2CC252EFA6015009167B7 /* Onboarding */ = {
@@ -561,6 +581,7 @@
 				53B2CB872EFA5002009167B7 /* WordBankService.swift in Sources */,
 				53B2CB892EFA5003009167B7 /* SpeechService.swift in Sources */,
 				53B2CB8B2EFA5004009167B7 /* PersistenceService.swift in Sources */,
+				53B2CD072EFB0004009167B7 /* StoreManager.swift in Sources */,
 				53B2CB8D2EFA5005009167B7 /* AppState.swift in Sources */,
 				53B2CB8F2EFA5006009167B7 /* GameViewModel.swift in Sources */,
 				53B2CB912EFA5007009167B7 /* OnboardingView.swift in Sources */,
@@ -600,11 +621,14 @@
 				53B2CC052EFA6004009167B7 /* SpeechService.swift in Sources */,
 				53B2CC062EFA6005009167B7 /* WordBankService.swift in Sources */,
 				53B2CC072EFA6006009167B7 /* PersistenceService.swift in Sources */,
+				53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */,
+				53B2CD032EFB0002009167B7 /* AdManager.swift in Sources */,
 				53B2CC082EFA6007009167B7 /* AppState.swift in Sources */,
 				53B2CC092EFA6008009167B7 /* GameViewModel.swift in Sources */,
 				53B2CC0A2EFA6009009167B7 /* OnboardingView.swift in Sources */,
 				53B2CC0B2EFA600A009167B7 /* HomeView.swift in Sources */,
 				53B2CC0C2EFA600B009167B7 /* SettingsView.swift in Sources */,
+				53B2CD052EFB0003009167B7 /* ParentGateView.swift in Sources */,
 				53B2CC0D2EFA600C009167B7 /* GameView.swift in Sources */,
 				53B2CC0E2EFA600D009167B7 /* FeedbackView.swift in Sources */,
 				53B2CC0F2EFA600E009167B7 /* LevelCompleteView.swift in Sources */,

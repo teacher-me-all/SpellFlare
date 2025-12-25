@@ -2,7 +2,7 @@
 //  SettingsView.swift
 //  spelling-bee iOS App
 //
-//  Settings screen for changing grade and viewing profile.
+//  Settings screen for changing grade, purchases, and viewing profile.
 //
 
 import SwiftUI
@@ -10,8 +10,14 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var speechService = SpeechService.shared
+    @ObservedObject var storeManager = StoreManager.shared
     @State private var selectedGrade: Int = 1
     @State private var showResetConfirm = false
+    @State private var showParentGate = false
+    @State private var showRestoreAlert = false
+    @State private var restoreMessage = ""
+    @State private var showPurchaseResult = false
+    @State private var purchaseResultMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -86,6 +92,51 @@ struct SettingsView: View {
                     }
                 }
 
+                // Purchases Section
+                Section {
+                    if storeManager.isAdsRemoved {
+                        HStack {
+                            Label("Ads Removed", systemImage: "checkmark.seal.fill")
+                                .foregroundColor(.green)
+                            Spacer()
+                            Text("Purchased")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        Button {
+                            showParentGate = true
+                        } label: {
+                            HStack {
+                                Label("Remove Ads", systemImage: "cart.fill")
+                                Spacer()
+                                if storeManager.purchaseInProgress {
+                                    ProgressView()
+                                        .scaleEffect(0.8)
+                                } else {
+                                    Text(storeManager.formattedPrice)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .disabled(storeManager.purchaseInProgress)
+                    }
+
+                    Button {
+                        Task {
+                            let restored = await storeManager.restorePurchases()
+                            restoreMessage = restored ? "Purchases restored successfully!" : "No purchases to restore."
+                            showRestoreAlert = true
+                        }
+                    } label: {
+                        Label("Restore Purchases", systemImage: "arrow.clockwise")
+                    }
+                } header: {
+                    Text("Purchases")
+                } footer: {
+                    Text("Remove ads to enjoy an uninterrupted spelling experience.")
+                }
+
                 // Danger Zone
                 Section {
                     Button(role: .destructive) {
@@ -116,6 +167,30 @@ struct SettingsView: View {
                 }
             } message: {
                 Text("This will delete all your progress. This action cannot be undone.")
+            }
+            .alert("Restore Purchases", isPresented: $showRestoreAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(restoreMessage)
+            }
+            .sheet(isPresented: $showParentGate) {
+                ParentGateView {
+                    // Parent verified, proceed with purchase
+                    Task {
+                        let success = await storeManager.purchaseRemoveAds()
+                        if success {
+                            purchaseResultMessage = "Ads removed successfully! Enjoy ad-free spelling practice."
+                        } else {
+                            purchaseResultMessage = storeManager.purchaseError ?? "Purchase failed. Please try again."
+                        }
+                        showPurchaseResult = true
+                    }
+                }
+            }
+            .alert("Purchase", isPresented: $showPurchaseResult) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(purchaseResultMessage)
             }
         }
     }

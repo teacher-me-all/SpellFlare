@@ -84,6 +84,7 @@ struct HomeView: View {
 
 // MARK: - Top Header View
 struct TopHeaderView: View {
+    @EnvironmentObject var appState: AppState
     let profile: UserProfile?
     @Binding var showGradePicker: Bool
     @Binding var showVoicePicker: Bool
@@ -122,23 +123,18 @@ struct TopHeaderView: View {
 
                 Spacer()
 
-                // Voice Button
+                // Settings Button
                 Button {
-                    showVoicePicker = true
+                    appState.navigateToSettings()
                 } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "speaker.wave.2.fill")
-                            .font(.system(size: 16))
-                        Text(String(SpeechService.shared.selectedVoice.name.prefix(6)))
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                    .foregroundColor(.purple)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(
-                        Capsule()
-                            .fill(Color.white.opacity(0.9))
-                    )
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                        .frame(width: 40, height: 40)
+                        .background(
+                            Circle()
+                                .fill(Color.white.opacity(0.2))
+                        )
                 }
             }
             .padding(.horizontal, 20)

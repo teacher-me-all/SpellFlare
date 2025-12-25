@@ -3,6 +3,7 @@
 //  spelling-bee Watch App
 //
 //  Celebration screen shown when a level is completed.
+//  Shows minimal static ad (brief delay) before navigation.
 //
 
 import SwiftUI
@@ -10,74 +11,129 @@ import SwiftUI
 struct LevelCompleteView: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var viewModel: GameViewModel
+    @ObservedObject var storeManager = StoreManager.shared
 
     let level: Int
 
     @State private var showConfetti = false
     @State private var starScale: CGFloat = 0
     @State private var textOpacity: Double = 0
+    @State private var showingAd = false
+    @State private var pendingAction: (() -> Void)?
+    @State private var adCountdown = 3
+
+    private var shouldShowAd: Bool {
+        !storeManager.isAdsRemoved
+    }
 
     var body: some View {
         ZStack {
-            // Confetti background
-            ConfettiView(isActive: $showConfetti)
+            if showingAd {
+                // Simple static ad view
+                WatchAdView(countdown: $adCountdown) {
+                    showingAd = false
+                    pendingAction?()
+                    pendingAction = nil
+                }
+            } else {
+                // Confetti background
+                ConfettiView(isActive: $showConfetti)
 
-            VStack(spacing: 12) {
-                Spacer()
-
-                // Trophy/Star
-                ZStack {
-                    Circle()
-                        .fill(
-                            RadialGradient(
-                                colors: [.cyan, .white.opacity(0.3)],
-                                center: .center,
-                                startRadius: 0,
-                                endRadius: 40
+                VStack(spacing: 8) {
+                    // Trophy/Star
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [.cyan, .white.opacity(0.3)],
+                                    center: .center,
+                                    startRadius: 0,
+                                    endRadius: 30
+                                )
                             )
-                        )
-                        .frame(width: 70, height: 70)
-                        .scaleEffect(starScale)
+                            .frame(width: 50, height: 50)
+                            .scaleEffect(starScale)
 
-                    Text("⭐")
-                        .font(.system(size: 40))
-                        .scaleEffect(starScale)
+                        Text("⭐")
+                            .font(.system(size: 28))
+                            .scaleEffect(starScale)
+                    }
+
+                    // Celebration text
+                    VStack(spacing: 2) {
+                        Text("Level \(level)")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+
+                        Text("Complete!")
+                            .font(.subheadline)
+                            .foregroundColor(.cyan)
+                    }
+                    .opacity(textOpacity)
+
+                    Spacer()
+
+                    // Two round buttons side by side
+                    HStack(spacing: 16) {
+                        // Home button
+                        Button {
+                            handleNavigation {
+                                appState.completeLevel(level)
+                                appState.navigateToHome()
+                            }
+                        } label: {
+                            Image(systemName: "house.fill")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                                .frame(width: 44, height: 44)
+                                .background(Circle().fill(Color.white.opacity(0.2)))
+                        }
+                        .buttonStyle(.plain)
+
+                        // Next level button (if not at max level)
+                        if level < 50 {
+                            Button {
+                                handleNavigation {
+                                    appState.completeLevel(level)
+                                    appState.navigateToGame(level: level + 1)
+                                }
+                            } label: {
+                                Image(systemName: "arrow.right")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.purple)
+                                    .frame(width: 44, height: 44)
+                                    .background(Circle().fill(Color.cyan))
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .opacity(textOpacity)
+
+                    // Minimal ad notice
+                    if shouldShowAd {
+                        Text("Remove ads in iPhone Settings")
+                            .font(.system(size: 9))
+                            .foregroundColor(.white.opacity(0.4))
+                            .opacity(textOpacity)
+                    }
                 }
-
-                // Celebration text
-                VStack(spacing: 4) {
-                    Text("Level \(level)")
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-
-                    Text("Complete!")
-                        .font(.headline)
-                        .foregroundColor(.cyan)
-                }
-                .opacity(textOpacity)
-
-                Spacer()
-
-                // Continue button
-                Button {
-                    // Save progress and go home
-                    appState.completeLevel(level)
-                    appState.navigateToHome()
-                } label: {
-                    Text("Continue")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.cyan)
-                .padding(.horizontal)
-                .opacity(textOpacity)
+                .padding(.vertical, 8)
             }
-            .padding()
         }
         .onAppear {
             animateCelebration()
+        }
+    }
+
+    private func handleNavigation(action: @escaping () -> Void) {
+        if shouldShowAd {
+            pendingAction = action
+            adCountdown = 3
+            showingAd = true
+        } else {
+            action()
         }
     }
 
@@ -95,6 +151,71 @@ struct LevelCompleteView: View {
         // Confetti
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             showConfetti = true
+        }
+    }
+}
+
+// MARK: - Watch Ad View (minimal static ad)
+struct WatchAdView: View {
+    @Binding var countdown: Int
+    let onDismiss: () -> Void
+
+    @State private var timer: Timer?
+
+    var body: some View {
+        VStack(spacing: 8) {
+            Text("Ad")
+                .font(.system(size: 9))
+                .foregroundColor(.white.opacity(0.5))
+
+            Spacer()
+
+            Image(systemName: "star.circle.fill")
+                .font(.system(size: 36))
+                .foregroundColor(.yellow)
+
+            Text("Keep Practicing!")
+                .font(.headline)
+                .foregroundColor(.white)
+
+            Text("Spelling makes you smarter")
+                .font(.system(size: 10))
+                .foregroundColor(.white.opacity(0.7))
+
+            Spacer()
+
+            if countdown > 0 {
+                Text("\(countdown)...")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.5))
+            } else {
+                Button {
+                    timer?.invalidate()
+                    onDismiss()
+                } label: {
+                    Text("Continue")
+                        .font(.caption)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.cyan)
+            }
+        }
+        .padding()
+        .onAppear {
+            startCountdown()
+        }
+        .onDisappear {
+            timer?.invalidate()
+        }
+    }
+
+    private func startCountdown() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if countdown > 0 {
+                countdown -= 1
+            } else {
+                timer?.invalidate()
+            }
         }
     }
 }

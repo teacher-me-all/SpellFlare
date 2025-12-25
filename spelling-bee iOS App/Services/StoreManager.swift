@@ -1,0 +1,191 @@
+//
+//  StoreManager.swift
+//  spelling-bee iOS App
+//
+//  Manages In-App Purchases using StoreKit 2.
+//  Handles "Remove Ads" non-consumable purchase.
+//
+
+import Foundation
+import StoreKit
+
+@MainActor
+class StoreManager: ObservableObject {
+    static let shared = StoreManager()
+
+    // MARK: - Product IDs
+    static let removeAdsProductId = "remove_ads"
+
+    // MARK: - Debug Mode (set to false for production)
+    #if DEBUG
+    private let debugMode = true  // Enable to test without StoreKit config
+    #else
+    private let debugMode = false
+    #endif
+
+    // MARK: - Published State
+    @Published private(set) var isAdsRemoved: Bool = false {
+        didSet {
+            // Persist debug purchase state
+            if debugMode {
+                UserDefaults.standard.set(isAdsRemoved, forKey: "debug_ads_removed")
+            }
+        }
+    }
+    @Published private(set) var removeAdsProduct: Product?
+    @Published private(set) var purchaseInProgress: Bool = false
+    @Published private(set) var purchaseError: String?
+
+    // MARK: - Private Properties
+    private var updateListenerTask: Task<Void, Error>?
+
+    // MARK: - Initialization
+    init() {
+        // Load debug state if in debug mode
+        if debugMode {
+            isAdsRemoved = UserDefaults.standard.bool(forKey: "debug_ads_removed")
+        }
+
+        // Start listening for transaction updates
+        updateListenerTask = listenForTransactions()
+
+        // Check current entitlements on init
+        Task {
+            await checkEntitlements()
+            await loadProducts()
+        }
+    }
+
+    deinit {
+        updateListenerTask?.cancel()
+    }
+
+    // MARK: - Load Products
+
+    func loadProducts() async {
+        do {
+            let products = try await Product.products(for: [StoreManager.removeAdsProductId])
+            removeAdsProduct = products.first
+        } catch {
+            print("Failed to load products: \(error)")
+        }
+    }
+
+    // MARK: - Check Entitlements
+
+    func checkEntitlements() async {
+        // Check if user has the remove_ads entitlement
+        for await result in Transaction.currentEntitlements {
+            if case .verified(let transaction) = result {
+                if transaction.productID == StoreManager.removeAdsProductId {
+                    isAdsRemoved = true
+                    return
+                }
+            }
+        }
+        isAdsRemoved = false
+    }
+
+    // MARK: - Purchase
+
+    func purchaseRemoveAds() async -> Bool {
+        // Debug mode: simulate purchase without StoreKit
+        if debugMode {
+            purchaseInProgress = true
+            purchaseError = nil
+            // Simulate brief delay
+            try? await Task.sleep(nanoseconds: 500_000_000)
+            isAdsRemoved = true
+            purchaseInProgress = false
+            return true
+        }
+
+        guard let product = removeAdsProduct else {
+            purchaseError = "Product not available. Please try again later."
+            return false
+        }
+
+        purchaseInProgress = true
+        purchaseError = nil
+
+        do {
+            let result = try await product.purchase()
+
+            switch result {
+            case .success(let verification):
+                // Verify the transaction cryptographically
+                if case .verified(let transaction) = verification {
+                    // Grant entitlement
+                    isAdsRemoved = true
+                    // Finish the transaction
+                    await transaction.finish()
+                    purchaseInProgress = false
+                    return true
+                } else {
+                    // Verification failed - do not grant entitlement
+                    purchaseError = "Purchase verification failed"
+                    purchaseInProgress = false
+                    return false
+                }
+
+            case .userCancelled:
+                purchaseInProgress = false
+                return false
+
+            case .pending:
+                purchaseError = "Purchase pending approval"
+                purchaseInProgress = false
+                return false
+
+            @unknown default:
+                purchaseError = "Unknown purchase result"
+                purchaseInProgress = false
+                return false
+            }
+        } catch {
+            purchaseError = "Purchase failed: \(error.localizedDescription)"
+            purchaseInProgress = false
+            return false
+        }
+    }
+
+    // MARK: - Restore Purchases
+
+    func restorePurchases() async -> Bool {
+        do {
+            try await AppStore.sync()
+            await checkEntitlements()
+            return isAdsRemoved
+        } catch {
+            purchaseError = "Restore failed: \(error.localizedDescription)"
+            return false
+        }
+    }
+
+    // MARK: - Transaction Listener
+
+    private func listenForTransactions() -> Task<Void, Error> {
+        return Task.detached {
+            for await result in Transaction.updates {
+                if case .verified(let transaction) = result {
+                    await self.handleVerifiedTransaction(transaction)
+                    await transaction.finish()
+                }
+            }
+        }
+    }
+
+    private func handleVerifiedTransaction(_ transaction: Transaction) async {
+        if transaction.productID == StoreManager.removeAdsProductId {
+            await MainActor.run {
+                self.isAdsRemoved = true
+            }
+        }
+    }
+
+    // MARK: - Formatted Price
+
+    var formattedPrice: String {
+        removeAdsProduct?.displayPrice ?? "$0.99"
+    }
+}

@@ -40,6 +40,7 @@ struct ContentView: View {
                     case .game(let level):
                         GameView(level: level)
                             .environmentObject(appState)
+                            .id(level) // Force view recreation when level changes
 
                     case .settings:
                         SettingsView()

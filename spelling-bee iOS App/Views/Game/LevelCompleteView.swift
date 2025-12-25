@@ -3,6 +3,7 @@
 //  spelling-bee iOS App
 //
 //  Celebration screen shown when a level is completed.
+//  Shows ads after test completion (if not purchased Remove Ads).
 //
 
 import SwiftUI
@@ -10,6 +11,8 @@ import SwiftUI
 struct LevelCompleteView: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var viewModel: GameViewModel
+    @ObservedObject var adManager = AdManager.shared
+    @ObservedObject var storeManager = StoreManager.shared
 
     let level: Int
 
@@ -17,6 +20,8 @@ struct LevelCompleteView: View {
     @State private var starScale: CGFloat = 0
     @State private var textOpacity: Double = 0
     @State private var buttonsOpacity: Double = 0
+    @State private var showAd = false
+    @State private var pendingAction: (() -> Void)?
 
     var body: some View {
         ZStack {
@@ -69,8 +74,10 @@ struct LevelCompleteView: View {
                 VStack(spacing: 12) {
                     if level < 50 {
                         Button {
-                            appState.completeLevel(level)
-                            appState.navigateToGame(level: level + 1)
+                            handleNavigation {
+                                appState.completeLevel(level)
+                                appState.navigateToGame(level: level + 1)
+                            }
                         } label: {
                             Label("Next Level", systemImage: "arrow.right")
                                 .font(.headline)
@@ -83,8 +90,10 @@ struct LevelCompleteView: View {
                     }
 
                     Button {
-                        appState.completeLevel(level)
-                        appState.navigateToHome()
+                        handleNavigation {
+                            appState.completeLevel(level)
+                            appState.navigateToHome()
+                        }
                     } label: {
                         Text("Back to Levels")
                             .font(.headline)
@@ -102,6 +111,30 @@ struct LevelCompleteView: View {
         }
         .onAppear {
             animateCelebration()
+            // Notify ad manager that test was completed
+            adManager.onTestCompleted()
+        }
+        .fullScreenCover(isPresented: $showAd) {
+            PlaceholderAdView(onDismiss: {
+                showAd = false
+                // Execute the pending navigation action
+                if let action = pendingAction {
+                    action()
+                    pendingAction = nil
+                }
+            })
+        }
+    }
+
+    private func handleNavigation(action: @escaping () -> Void) {
+        // Check if we should show an ad before navigating
+        if adManager.shouldShowAd && !storeManager.isAdsRemoved {
+            pendingAction = action
+            adManager.prepareToShowAd()
+            showAd = true
+        } else {
+            // No ad needed, navigate directly
+            action()
         }
     }
 
