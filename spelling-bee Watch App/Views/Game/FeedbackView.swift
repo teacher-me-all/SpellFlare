@@ -68,9 +68,7 @@ struct FeedbackView: View {
             if viewModel.showRetryOption {
                 HStack(spacing: 8) {
                     Button {
-                        Task {
-                            await viewModel.retry()
-                        }
+                        viewModel.retry()
                     } label: {
                         Text("Retry")
                             .font(.caption2)
