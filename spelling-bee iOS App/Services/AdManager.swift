@@ -185,3 +185,137 @@ struct PlaceholderAdView: View {
         }
     }
 }
+
+// MARK: - Pre-Test Ad View (Shown before test starts)
+struct PreTestAdView: View {
+    @ObservedObject var storeManager = StoreManager.shared
+    let level: Int
+    let onDismiss: () -> Void
+
+    @State private var countdown: Int = 5
+    @State private var canStart: Bool = false
+
+    var body: some View {
+        ZStack {
+            // Purple gradient background matching the game
+            LinearGradient(
+                colors: [
+                    Color(red: 0.3, green: 0.1, blue: 0.7),
+                    Color(red: 0.4, green: 0.2, blue: 0.8)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                Spacer()
+
+                // Ad label
+                Text("Advertisement")
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.5))
+
+                // Ad content card
+                VStack(spacing: 20) {
+                    // Bee mascot
+                    Text("🐝")
+                        .font(.system(size: 70))
+
+                    Text("Get Ready!")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+
+                    Text("Level \(level) is about to begin")
+                        .font(.headline)
+                        .foregroundColor(.cyan)
+
+                    Text("Practice makes perfect!\nListen carefully and spell each word.")
+                        .font(.body)
+                        .foregroundColor(.white.opacity(0.8))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+                }
+                .padding(30)
+                .background(
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color.white.opacity(0.1))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+                        )
+                )
+                .padding(.horizontal, 24)
+
+                Spacer()
+
+                // Start button or countdown
+                VStack(spacing: 16) {
+                    if canStart {
+                        Button {
+                            onDismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "play.fill")
+                                Text("Start Test")
+                            }
+                            .font(.headline)
+                            .foregroundColor(.purple)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(12)
+                        }
+                        .padding(.horizontal, 40)
+                    } else {
+                        // Countdown circle
+                        ZStack {
+                            Circle()
+                                .stroke(Color.white.opacity(0.2), lineWidth: 4)
+                                .frame(width: 60, height: 60)
+
+                            Circle()
+                                .trim(from: 0, to: CGFloat(countdown) / 5.0)
+                                .stroke(Color.cyan, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                .frame(width: 60, height: 60)
+                                .rotationEffect(.degrees(-90))
+                                .animation(.linear(duration: 1), value: countdown)
+
+                            Text("\(countdown)")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        }
+
+                        Text("Starting soon...")
+                            .font(.subheadline)
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+
+                    // Remove Ads hint
+                    if storeManager.removeAdsProduct != nil {
+                        Text("Parents: Remove ads in Settings")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.4))
+                    }
+                }
+                .padding(.bottom, 40)
+            }
+        }
+        .onAppear {
+            startCountdown()
+        }
+    }
+
+    private func startCountdown() {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            if countdown > 1 {
+                countdown -= 1
+            } else {
+                timer.invalidate()
+                canStart = true
+            }
+        }
+    }
+}

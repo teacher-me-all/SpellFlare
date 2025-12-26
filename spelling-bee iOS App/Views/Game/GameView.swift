@@ -43,6 +43,15 @@ struct GameView: View {
 
                 // Main content based on phase
                 switch viewModel.phase {
+                case .preAd:
+                    // Show loading indicator while ad is displayed
+                    VStack(spacing: 20) {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(1.5)
+                        Text("Loading...")
+                            .foregroundColor(.white.opacity(0.7))
+                    }
                 case .presenting:
                     WordPresentationView(viewModel: viewModel)
                 case .spelling:
@@ -58,6 +67,11 @@ struct GameView: View {
         }
         .sheet(isPresented: $showVoicePicker) {
             GameVoicePickerSheet(currentWord: viewModel.currentWord?.text)
+        }
+        .fullScreenCover(isPresented: $viewModel.showPreTestAd) {
+            PreTestAdView(level: level) {
+                viewModel.onPreTestAdDismissed()
+            }
         }
         .onAppear {
             if let grade = appState.profile?.grade {

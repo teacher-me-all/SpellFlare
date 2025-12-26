@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 enum GamePhase {
+    case preAd          // 5-second ad before test starts
     case presenting
     case spelling
     case feedback
@@ -23,15 +24,20 @@ enum FeedbackType {
 @MainActor
 class GameViewModel: ObservableObject {
     // MARK: - Published State
-    @Published var phase: GamePhase = .presenting
+    @Published var phase: GamePhase = .preAd
     @Published var session: GameSession?
     @Published var feedbackType: FeedbackType?
     @Published var showRetryOption = false
     @Published var userSpelling = ""
+    @Published var showPreTestAd = false
 
     // MARK: - Services
     private let speechService = SpeechService.shared
     private let wordBank = WordBankService.shared
+
+    // MARK: - Pending level info for after ad
+    private var pendingLevel: Int = 1
+    private var pendingGrade: Int = 1
 
     // MARK: - Computed Properties
     var currentWord: Word? {
@@ -53,8 +59,29 @@ class GameViewModel: ObservableObject {
     // MARK: - Game Flow
 
     func startLevel(level: Int, grade: Int) {
-        let words = wordBank.getWords(grade: grade, level: level, count: 15)
-        session = GameSession(level: level, grade: grade, words: words)
+        pendingLevel = level
+        pendingGrade = grade
+
+        // Check if we should show pre-test ad
+        if AdManager.shared.adsEnabled {
+            phase = .preAd
+            showPreTestAd = true
+        } else {
+            // No ads, start directly
+            beginActualTest()
+        }
+    }
+
+    /// Called after pre-test ad is dismissed to start the actual test
+    func onPreTestAdDismissed() {
+        showPreTestAd = false
+        beginActualTest()
+    }
+
+    /// Actually starts the test with words
+    private func beginActualTest() {
+        let words = wordBank.getWords(grade: pendingGrade, level: pendingLevel, count: 15)
+        session = GameSession(level: pendingLevel, grade: pendingGrade, words: words)
         phase = .presenting
         presentCurrentWord()
     }

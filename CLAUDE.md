@@ -36,10 +36,11 @@ ContentView (root navigation)
 ├── HomeView (level grid with progress)
 │   └── SettingsView (grade, voice, purchases, reset)
 └── GameView (gameplay per level)
+    ├── PreTestAdView (5-sec ad before test starts)
     ├── WordPresentationView (TTS speaks word)
     ├── SpellingInputView (speech recognition / keyboard)
     ├── FeedbackView (correct/incorrect with retry option)
-    └── LevelCompleteView (celebration + ads)
+    └── LevelCompleteView (celebration + post-test ad)
 ```
 
 ### Key Services
@@ -50,12 +51,12 @@ ContentView (root navigation)
 | **WordBankService** | `Services/WordBankService.swift` | Word selection by grade (1-7) and level (1-50). Difficulty = grade + (level-1)/10. |
 | **PersistenceService** | `Services/PersistenceService.swift` | UserDefaults storage for UserProfile. |
 | **StoreManager** | `Services/StoreManager.swift` | StoreKit 2 IAP handling for "Remove Ads" purchase. |
-| **AdManager** | `Services/AdManager.swift` | (iOS only) Ad display logic - only after test completion. |
+| **AdManager** | `Services/AdManager.swift` | (iOS only) Ad display logic - before and after tests. Contains `PreTestAdView` and `PlaceholderAdView`. |
 
 ### State Management
 
 - **AppState** (`ViewModels/AppState.swift`): Global state via @EnvironmentObject. Screen navigation enum: `.onboarding`, `.home`, `.game(level)`, `.settings`
-- **GameViewModel** (`ViewModels/GameViewModel.swift`): Per-game session. GamePhase: `presenting` → `spelling` → `feedback` → `levelComplete`
+- **GameViewModel** (`ViewModels/GameViewModel.swift`): Per-game session. GamePhase: `preAd` → `presenting` → `spelling` → `feedback` → `levelComplete`
 
 ### Data Models
 
@@ -86,31 +87,35 @@ This app is designed for the **Kids Category** on the App Store. All features mu
 
 ### Ads Implementation Rules
 
-**CRITICAL: Ads are ONLY shown after test/level completion - NEVER during active gameplay.**
+**CRITICAL: Ads are shown BEFORE and AFTER tests - NEVER during active gameplay (spelling words).**
 
 | Rule | Implementation |
 |------|----------------|
-| Timing | Only after completing a spelling test (all 10 words) |
+| Pre-Test | 5-second ad screen before test starts (can skip after countdown) |
+| Post-Test | Ad after completing a spelling test (all 15 words) |
 | Type | Non-personalized ads only - no behavioral tracking |
 | Content | Age-appropriate, no violent/mature content |
-| Frequency | Maximum once per completed test |
 | Skip | Users can skip after countdown (5 sec iOS, 3 sec watchOS) |
 
 **Platform-specific behavior:**
 
-| Platform | Ad Type | Duration | Notes |
-|----------|---------|----------|-------|
-| iOS | Full-screen interstitial | 5 sec countdown | Shows `PlaceholderAdView` before navigation |
-| watchOS | Static banner/text | 3 sec countdown | Minimal `WatchAdView` - no video |
+| Platform | Pre-Test Ad | Post-Test Ad | Notes |
+|----------|-------------|--------------|-------|
+| iOS | `PreTestAdView` (5 sec) | `PlaceholderAdView` (5 sec) | Full-screen interstitials |
+| watchOS | `WatchAdView` (3 sec) | `WatchAdView` (3 sec) | Minimal static banner/text |
 
 **AdManager Flow:**
 ```swift
-// Called when test completes
-adManager.onTestCompleted()
+// Pre-test ad (in GameViewModel.startLevel)
+if AdManager.shared.adsEnabled {
+    phase = .preAd
+    showPreTestAd = true  // Shows PreTestAdView via fullScreenCover
+}
 
-// Check before navigation
+// Post-test ad (when test completes)
+adManager.onTestCompleted()
 if adManager.shouldShowAd && !storeManager.isAdsRemoved {
-    // Show ad, then navigate
+    // Show PlaceholderAdView, then navigate
 }
 ```
 
@@ -291,12 +296,13 @@ To rebuild this app from scratch:
    - Speech recognition for spelling input
    - Level progression (50 levels, 10 words each)
 3. **Add monetization:**
-   - Ads only after test completion (never during gameplay)
+   - Pre-test ads (5-sec countdown before test starts)
+   - Post-test ads (after test completion, never during gameplay)
    - "Remove Ads" IAP ($0.99, non-consumable)
    - Parent gate (math problem) before purchases
    - Restore purchases functionality
 4. **Platform differences:**
-   - iOS: Full interstitial ads, purchase UI in Settings
+   - iOS: Full interstitial ads (pre and post-test), purchase UI in Settings
    - watchOS: Static minimal ads, purchases via iPhone
 5. **Kids Category compliance:**
    - No tracking, no external links, no pressure language
