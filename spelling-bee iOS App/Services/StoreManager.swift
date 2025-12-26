@@ -23,11 +23,14 @@ class StoreManager: ObservableObject {
     private let debugMode = false
     #endif
 
+    // MARK: - UI Testing Mode
+    private let uiTestingMode: Bool
+
     // MARK: - Published State
     @Published private(set) var isAdsRemoved: Bool = false {
         didSet {
-            // Persist debug purchase state
-            if debugMode {
+            // Persist debug purchase state (not in UI testing mode)
+            if debugMode && !uiTestingMode {
                 UserDefaults.standard.set(isAdsRemoved, forKey: "debug_ads_removed")
             }
         }
@@ -40,7 +43,11 @@ class StoreManager: ObservableObject {
     private var updateListenerTask: Task<Void, Error>?
 
     // MARK: - Initialization
+
+    /// Standard initializer for production use
     init() {
+        self.uiTestingMode = false
+
         // Load debug state if in debug mode
         if debugMode {
             isAdsRemoved = UserDefaults.standard.bool(forKey: "debug_ads_removed")
@@ -53,6 +60,30 @@ class StoreManager: ObservableObject {
         Task {
             await checkEntitlements()
             await loadProducts()
+        }
+    }
+
+    /// UI Testing initializer - allows configuring ads removed state
+    /// - Parameters:
+    ///   - uiTestingMode: When true, skips StoreKit operations
+    ///   - adsRemoved: Initial state for isAdsRemoved in UI testing mode
+    init(uiTestingMode: Bool, adsRemoved: Bool) {
+        self.uiTestingMode = uiTestingMode
+
+        if uiTestingMode {
+            // In UI testing mode, set the ads state directly without StoreKit
+            self.isAdsRemoved = adsRemoved
+            // Don't start transaction listener or load products in UI testing mode
+        } else {
+            // Normal initialization
+            if debugMode {
+                isAdsRemoved = UserDefaults.standard.bool(forKey: "debug_ads_removed")
+            }
+            updateListenerTask = listenForTransactions()
+            Task {
+                await checkEntitlements()
+                await loadProducts()
+            }
         }
     }
 
