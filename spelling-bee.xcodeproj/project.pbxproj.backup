@@ -1,0 +1,1385 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		53B2CB512EFA4E17009167B7 /* spelling-bee Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 53B2CB502EFA4E17009167B7 /* spelling-bee Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		53B2CB562EFA4E17009167B7 /* spelling_beeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB552EFA4E17009167B7 /* spelling_beeApp.swift */; };
+		53B2CB582EFA4E17009167B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB572EFA4E17009167B7 /* ContentView.swift */; };
+		53B2CB5A2EFA4E1A009167B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53B2CB592EFA4E1A009167B7 /* Assets.xcassets */; };
+		53B2CB5D2EFA4E1A009167B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53B2CB5C2EFA4E1A009167B7 /* Preview Assets.xcassets */; };
+		53B2CB672EFA4E1A009167B7 /* spelling_bee_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB662EFA4E1A009167B7 /* spelling_bee_Watch_AppTests.swift */; };
+		53B2CB712EFA4E1A009167B7 /* spelling_bee_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB702EFA4E1A009167B7 /* spelling_bee_Watch_AppUITests.swift */; };
+		53B2CB732EFA4E1A009167B7 /* spelling_bee_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB722EFA4E1A009167B7 /* spelling_bee_Watch_AppUITestsLaunchTests.swift */; };
+		53B2CB832EFA5000009167B7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB842EFA5000009167B7 /* UserProfile.swift */; };
+		53B2CB852EFA5001009167B7 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB862EFA5001009167B7 /* Word.swift */; };
+		53B2CB872EFA5002009167B7 /* WordBankService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB882EFA5002009167B7 /* WordBankService.swift */; };
+		53B2CB892EFA5003009167B7 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB8A2EFA5003009167B7 /* SpeechService.swift */; };
+		53B2CB8B2EFA5004009167B7 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB8C2EFA5004009167B7 /* PersistenceService.swift */; };
+		53B2CB8D2EFA5005009167B7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB8E2EFA5005009167B7 /* AppState.swift */; };
+		53B2CB8F2EFA5006009167B7 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB902EFA5006009167B7 /* GameViewModel.swift */; };
+		53B2CB912EFA5007009167B7 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB922EFA5007009167B7 /* OnboardingView.swift */; };
+		53B2CB932EFA5008009167B7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB942EFA5008009167B7 /* HomeView.swift */; };
+		53B2CB952EFA5009009167B7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB962EFA5009009167B7 /* SettingsView.swift */; };
+		53B2CB972EFA500A009167B7 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB982EFA500A009167B7 /* GameView.swift */; };
+		53B2CB992EFA500B009167B7 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB9A2EFA500B009167B7 /* FeedbackView.swift */; };
+		53B2CB9B2EFA500C009167B7 /* LevelCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CB9C2EFA500C009167B7 /* LevelCompleteView.swift */; };
+		53B2CC012EFA6000009167B7 /* spelling_bee_iOS_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC102EFA6000009167B7 /* spelling_bee_iOS_App.swift */; };
+		53B2CC022EFA6001009167B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC112EFA6001009167B7 /* ContentView.swift */; };
+		53B2CC032EFA6002009167B7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC122EFA6002009167B7 /* UserProfile.swift */; };
+		53B2CC042EFA6003009167B7 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC132EFA6003009167B7 /* Word.swift */; };
+		53B2CC052EFA6004009167B7 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC142EFA6004009167B7 /* SpeechService.swift */; };
+		53B2CC062EFA6005009167B7 /* WordBankService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC152EFA6005009167B7 /* WordBankService.swift */; };
+		53B2CC072EFA6006009167B7 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC162EFA6006009167B7 /* PersistenceService.swift */; };
+		53B2CC082EFA6007009167B7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC172EFA6007009167B7 /* AppState.swift */; };
+		53B2CC092EFA6008009167B7 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC182EFA6008009167B7 /* GameViewModel.swift */; };
+		53B2CC0A2EFA6009009167B7 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC192EFA6009009167B7 /* OnboardingView.swift */; };
+		53B2CC0B2EFA600A009167B7 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1A2EFA600A009167B7 /* HomeView.swift */; };
+		53B2CC0C2EFA600B009167B7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1B2EFA600B009167B7 /* SettingsView.swift */; };
+		53B2CC0D2EFA600C009167B7 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1C2EFA600C009167B7 /* GameView.swift */; };
+		53B2CC0E2EFA600D009167B7 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */; };
+		53B2CC0F2EFA600E009167B7 /* LevelCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */; };
+		53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53B2CC612EFA7001009167B7 /* Assets.xcassets */; };
+		53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD002EFB0001009167B7 /* StoreManager.swift */; };
+		53B2CD032EFB0002009167B7 /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD022EFB0002009167B7 /* AdManager.swift */; };
+		53B2CD052EFB0003009167B7 /* ParentGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD042EFB0003009167B7 /* ParentGateView.swift */; };
+		53B2CD072EFB0004009167B7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD062EFB0004009167B7 /* StoreManager.swift */; };
+		53B2CE072EFC0007009167B7 /* spelling_bee_iOS_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CE062EFC0006009167B7 /* spelling_bee_iOS_AppTests.swift */; };
+		53B2CE182EFC0018009167B7 /* spelling_bee_iOS_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CE162EFC0016009167B7 /* spelling_bee_iOS_AppUITests.swift */; };
+		53B2CE192EFC0019009167B7 /* spelling_bee_iOS_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CE172EFC0017009167B7 /* spelling_bee_iOS_AppUITestsLaunchTests.swift */; };
+		53B2CF112EFD0011009167B7 /* SyncableProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF012EFD0001009167B7 /* SyncableProfile.swift */; };
+		53B2CF122EFD0012009167B7 /* SyncServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF022EFD0002009167B7 /* SyncServiceProtocol.swift */; };
+		53B2CF132EFD0013009167B7 /* LocalCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF032EFD0003009167B7 /* LocalCacheService.swift */; };
+		53B2CF152EFD0015009167B7 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */; };
+		53B2CF212EFD0021009167B7 /* SyncableProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF012EFD0001009167B7 /* SyncableProfile.swift */; };
+		53B2CF222EFD0022009167B7 /* SyncServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF022EFD0002009167B7 /* SyncServiceProtocol.swift */; };
+		53B2CF232EFD0023009167B7 /* LocalCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF032EFD0003009167B7 /* LocalCacheService.swift */; };
+		53B2CF252EFD0025009167B7 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */; };
+		53B2CF262EFD0026009167B7 /* WatchSyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF062EFD0006009167B7 /* WatchSyncHelper.swift */; };
+		53B2CF272EFD0027009167B7 /* PhoneSyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF072EFD0007009167B7 /* PhoneSyncHelper.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		53B2CB522EFA4E17009167B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53B2CB442EFA4E16009167B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53B2CB4F2EFA4E17009167B7;
+			remoteInfo = "spelling-bee Watch App";
+		};
+		53B2CB632EFA4E1A009167B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53B2CB442EFA4E16009167B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53B2CB4F2EFA4E17009167B7;
+			remoteInfo = "spelling-bee Watch App";
+		};
+		53B2CB6D2EFA4E1A009167B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53B2CB442EFA4E16009167B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53B2CB4F2EFA4E17009167B7;
+			remoteInfo = "spelling-bee Watch App";
+		};
+		53B2CE082EFC0008009167B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53B2CB442EFA4E16009167B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53B2CC402EFA6030009167B7;
+			remoteInfo = "spelling-bee iOS App";
+		};
+		53B2CE1A2EFC001A009167B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 53B2CB442EFA4E16009167B7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53B2CC402EFA6030009167B7;
+			remoteInfo = "spelling-bee iOS App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		53B2CB792EFA4E1A009167B7 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				53B2CB512EFA4E17009167B7 /* spelling-bee Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		53B2CB4A2EFA4E17009167B7 /* spelling-bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CB502EFA4E17009167B7 /* spelling-bee Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CB552EFA4E17009167B7 /* spelling_beeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_beeApp.swift; sourceTree = "<group>"; };
+		53B2CB572EFA4E17009167B7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		53B2CB592EFA4E1A009167B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		53B2CB5C2EFA4E1A009167B7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		53B2CB622EFA4E1A009167B7 /* spelling-bee Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "spelling-bee Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CB662EFA4E1A009167B7 /* spelling_bee_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_Watch_AppTests.swift; sourceTree = "<group>"; };
+		53B2CB6C2EFA4E1A009167B7 /* spelling-bee Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "spelling-bee Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CB702EFA4E1A009167B7 /* spelling_bee_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		53B2CB722EFA4E1A009167B7 /* spelling_bee_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		53B2CB842EFA5000009167B7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		53B2CB862EFA5001009167B7 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		53B2CB882EFA5002009167B7 /* WordBankService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBankService.swift; sourceTree = "<group>"; };
+		53B2CB8A2EFA5003009167B7 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
+		53B2CB8C2EFA5004009167B7 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		53B2CB8E2EFA5005009167B7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		53B2CB902EFA5006009167B7 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		53B2CB922EFA5007009167B7 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		53B2CB942EFA5008009167B7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		53B2CB962EFA5009009167B7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		53B2CB982EFA500A009167B7 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		53B2CB9A2EFA500B009167B7 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		53B2CB9C2EFA500C009167B7 /* LevelCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCompleteView.swift; sourceTree = "<group>"; };
+		53B2CC002EFA6000009167B7 /* spelling-bee iOS App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee iOS App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CC102EFA6000009167B7 /* spelling_bee_iOS_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_iOS_App.swift; sourceTree = "<group>"; };
+		53B2CC112EFA6001009167B7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		53B2CC122EFA6002009167B7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		53B2CC132EFA6003009167B7 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
+		53B2CC142EFA6004009167B7 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
+		53B2CC152EFA6005009167B7 /* WordBankService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBankService.swift; sourceTree = "<group>"; };
+		53B2CC162EFA6006009167B7 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		53B2CC172EFA6007009167B7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		53B2CC182EFA6008009167B7 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		53B2CC192EFA6009009167B7 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		53B2CC1A2EFA600A009167B7 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		53B2CC1B2EFA600B009167B7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		53B2CC1C2EFA600C009167B7 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCompleteView.swift; sourceTree = "<group>"; };
+		53B2CC612EFA7001009167B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		53B2CD002EFB0001009167B7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		53B2CD022EFB0002009167B7 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
+		53B2CD042EFB0003009167B7 /* ParentGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentGateView.swift; sourceTree = "<group>"; };
+		53B2CD062EFB0004009167B7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		53B2CE002EFC0000009167B7 /* spelling-bee iOS AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "spelling-bee iOS AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CE062EFC0006009167B7 /* spelling_bee_iOS_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_iOS_AppTests.swift; sourceTree = "<group>"; };
+		53B2CE112EFC0011009167B7 /* spelling-bee iOS AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "spelling-bee iOS AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53B2CE162EFC0016009167B7 /* spelling_bee_iOS_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_iOS_AppUITests.swift; sourceTree = "<group>"; };
+		53B2CE172EFC0017009167B7 /* spelling_bee_iOS_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_iOS_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		53B2CF012EFD0001009167B7 /* SyncableProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncableProfile.swift; sourceTree = "<group>"; };
+		53B2CF022EFD0002009167B7 /* SyncServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncServiceProtocol.swift; sourceTree = "<group>"; };
+		53B2CF032EFD0003009167B7 /* LocalCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCacheService.swift; sourceTree = "<group>"; };
+		53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
+		53B2CF062EFD0006009167B7 /* WatchSyncHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSyncHelper.swift; sourceTree = "<group>"; };
+		53B2CF072EFD0007009167B7 /* PhoneSyncHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSyncHelper.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		53B2CB4D2EFA4E17009167B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB5F2EFA4E1A009167B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB692EFA4E1A009167B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CC302EFA6020009167B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CE032EFC0003009167B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CE132EFC0013009167B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		53B2CB432EFA4E16009167B7 = {
+			isa = PBXGroup;
+			children = (
+				53B2CF302EFD0030009167B7 /* Shared */,
+				53B2CB542EFA4E17009167B7 /* spelling-bee Watch App */,
+				53B2CC202EFA6010009167B7 /* spelling-bee iOS App */,
+				53B2CB652EFA4E1A009167B7 /* spelling-bee Watch AppTests */,
+				53B2CB6F2EFA4E1A009167B7 /* spelling-bee Watch AppUITests */,
+				53B2CE052EFC0005009167B7 /* spelling-bee iOS AppTests */,
+				53B2CE152EFC0015009167B7 /* spelling-bee iOS AppUITests */,
+				53B2CB4B2EFA4E17009167B7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		53B2CB4B2EFA4E17009167B7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB4A2EFA4E17009167B7 /* spelling-bee.app */,
+				53B2CB502EFA4E17009167B7 /* spelling-bee Watch App.app */,
+				53B2CB622EFA4E1A009167B7 /* spelling-bee Watch AppTests.xctest */,
+				53B2CB6C2EFA4E1A009167B7 /* spelling-bee Watch AppUITests.xctest */,
+				53B2CC002EFA6000009167B7 /* spelling-bee iOS App.app */,
+				53B2CE002EFC0000009167B7 /* spelling-bee iOS AppTests.xctest */,
+				53B2CE112EFC0011009167B7 /* spelling-bee iOS AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		53B2CB542EFA4E17009167B7 /* spelling-bee Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB552EFA4E17009167B7 /* spelling_beeApp.swift */,
+				53B2CB572EFA4E17009167B7 /* ContentView.swift */,
+				53B2CBA02EFA5010009167B7 /* Models */,
+				53B2CBA12EFA5011009167B7 /* Services */,
+				53B2CBA22EFA5012009167B7 /* ViewModels */,
+				53B2CBA32EFA5013009167B7 /* Views */,
+				53B2CB592EFA4E1A009167B7 /* Assets.xcassets */,
+				53B2CB5B2EFA4E1A009167B7 /* Preview Content */,
+			);
+			path = "spelling-bee Watch App";
+			sourceTree = "<group>";
+		};
+		53B2CB5B2EFA4E1A009167B7 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB5C2EFA4E1A009167B7 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		53B2CB652EFA4E1A009167B7 /* spelling-bee Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB662EFA4E1A009167B7 /* spelling_bee_Watch_AppTests.swift */,
+			);
+			path = "spelling-bee Watch AppTests";
+			sourceTree = "<group>";
+		};
+		53B2CB6F2EFA4E1A009167B7 /* spelling-bee Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB702EFA4E1A009167B7 /* spelling_bee_Watch_AppUITests.swift */,
+				53B2CB722EFA4E1A009167B7 /* spelling_bee_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "spelling-bee Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		53B2CBA02EFA5010009167B7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB842EFA5000009167B7 /* UserProfile.swift */,
+				53B2CB862EFA5001009167B7 /* Word.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		53B2CBA12EFA5011009167B7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB882EFA5002009167B7 /* WordBankService.swift */,
+				53B2CB8A2EFA5003009167B7 /* SpeechService.swift */,
+				53B2CB8C2EFA5004009167B7 /* PersistenceService.swift */,
+				53B2CD062EFB0004009167B7 /* StoreManager.swift */,
+				53B2CF062EFD0006009167B7 /* WatchSyncHelper.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		53B2CBA22EFA5012009167B7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB8E2EFA5005009167B7 /* AppState.swift */,
+				53B2CB902EFA5006009167B7 /* GameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		53B2CBA32EFA5013009167B7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CBA42EFA5014009167B7 /* Onboarding */,
+				53B2CBA52EFA5015009167B7 /* Home */,
+				53B2CBA62EFA5016009167B7 /* Game */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		53B2CBA42EFA5014009167B7 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB922EFA5007009167B7 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		53B2CBA52EFA5015009167B7 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB942EFA5008009167B7 /* HomeView.swift */,
+				53B2CB962EFA5009009167B7 /* SettingsView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		53B2CBA62EFA5016009167B7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CB982EFA500A009167B7 /* GameView.swift */,
+				53B2CB9A2EFA500B009167B7 /* FeedbackView.swift */,
+				53B2CB9C2EFA500C009167B7 /* LevelCompleteView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		53B2CC202EFA6010009167B7 /* spelling-bee iOS App */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC102EFA6000009167B7 /* spelling_bee_iOS_App.swift */,
+				53B2CC112EFA6001009167B7 /* ContentView.swift */,
+				53B2CC212EFA6011009167B7 /* Models */,
+				53B2CC222EFA6012009167B7 /* Services */,
+				53B2CC232EFA6013009167B7 /* ViewModels */,
+				53B2CC242EFA6014009167B7 /* Views */,
+				53B2CC612EFA7001009167B7 /* Assets.xcassets */,
+			);
+			path = "spelling-bee iOS App";
+			sourceTree = "<group>";
+		};
+		53B2CC212EFA6011009167B7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC122EFA6002009167B7 /* UserProfile.swift */,
+				53B2CC132EFA6003009167B7 /* Word.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		53B2CC222EFA6012009167B7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC142EFA6004009167B7 /* SpeechService.swift */,
+				53B2CC152EFA6005009167B7 /* WordBankService.swift */,
+				53B2CC162EFA6006009167B7 /* PersistenceService.swift */,
+				53B2CD002EFB0001009167B7 /* StoreManager.swift */,
+				53B2CD022EFB0002009167B7 /* AdManager.swift */,
+				53B2CF072EFD0007009167B7 /* PhoneSyncHelper.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		53B2CC232EFA6013009167B7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC172EFA6007009167B7 /* AppState.swift */,
+				53B2CC182EFA6008009167B7 /* GameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		53B2CC242EFA6014009167B7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC252EFA6015009167B7 /* Onboarding */,
+				53B2CC262EFA6016009167B7 /* Home */,
+				53B2CC272EFA6017009167B7 /* Game */,
+				53B2CD082EFB0005009167B7 /* Common */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		53B2CC252EFA6015009167B7 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC192EFA6009009167B7 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		53B2CC262EFA6016009167B7 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC1A2EFA600A009167B7 /* HomeView.swift */,
+				53B2CC1B2EFA600B009167B7 /* SettingsView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		53B2CC272EFA6017009167B7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CC1C2EFA600C009167B7 /* GameView.swift */,
+				53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */,
+				53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		53B2CD082EFB0005009167B7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CD042EFB0003009167B7 /* ParentGateView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		53B2CE052EFC0005009167B7 /* spelling-bee iOS AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CE062EFC0006009167B7 /* spelling_bee_iOS_AppTests.swift */,
+			);
+			path = "spelling-bee iOS AppTests";
+			sourceTree = "<group>";
+		};
+		53B2CE152EFC0015009167B7 /* spelling-bee iOS AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CE162EFC0016009167B7 /* spelling_bee_iOS_AppUITests.swift */,
+				53B2CE172EFC0017009167B7 /* spelling_bee_iOS_AppUITestsLaunchTests.swift */,
+			);
+			path = "spelling-bee iOS AppUITests";
+			sourceTree = "<group>";
+		};
+		53B2CF302EFD0030009167B7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CF312EFD0031009167B7 /* Models */,
+				53B2CF332EFD0033009167B7 /* Protocols */,
+				53B2CF322EFD0032009167B7 /* Services */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		53B2CF312EFD0031009167B7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CF012EFD0001009167B7 /* SyncableProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		53B2CF322EFD0032009167B7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CF032EFD0003009167B7 /* LocalCacheService.swift */,
+				53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		53B2CF332EFD0033009167B7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				53B2CF022EFD0002009167B7 /* SyncServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		53B2CB492EFA4E17009167B7 /* spelling-bee */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CB7A2EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee" */;
+			buildPhases = (
+				53B2CB482EFA4E17009167B7 /* Resources */,
+				53B2CB792EFA4E1A009167B7 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				53B2CB532EFA4E17009167B7 /* PBXTargetDependency */,
+			);
+			name = "spelling-bee";
+			productName = "spelling-bee";
+			productReference = 53B2CB4A2EFA4E17009167B7 /* spelling-bee.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		53B2CB4F2EFA4E17009167B7 /* spelling-bee Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CB762EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee Watch App" */;
+			buildPhases = (
+				53B2CB4C2EFA4E17009167B7 /* Sources */,
+				53B2CB4D2EFA4E17009167B7 /* Frameworks */,
+				53B2CB4E2EFA4E17009167B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "spelling-bee Watch App";
+			productName = "spelling-bee Watch App";
+			productReference = 53B2CB502EFA4E17009167B7 /* spelling-bee Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		53B2CB612EFA4E1A009167B7 /* spelling-bee Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CB7D2EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee Watch AppTests" */;
+			buildPhases = (
+				53B2CB5E2EFA4E1A009167B7 /* Sources */,
+				53B2CB5F2EFA4E1A009167B7 /* Frameworks */,
+				53B2CB602EFA4E1A009167B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				53B2CB642EFA4E1A009167B7 /* PBXTargetDependency */,
+			);
+			name = "spelling-bee Watch AppTests";
+			productName = "spelling-bee Watch AppTests";
+			productReference = 53B2CB622EFA4E1A009167B7 /* spelling-bee Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		53B2CB6B2EFA4E1A009167B7 /* spelling-bee Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CB802EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee Watch AppUITests" */;
+			buildPhases = (
+				53B2CB682EFA4E1A009167B7 /* Sources */,
+				53B2CB692EFA4E1A009167B7 /* Frameworks */,
+				53B2CB6A2EFA4E1A009167B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				53B2CB6E2EFA4E1A009167B7 /* PBXTargetDependency */,
+			);
+			name = "spelling-bee Watch AppUITests";
+			productName = "spelling-bee Watch AppUITests";
+			productReference = 53B2CB6C2EFA4E1A009167B7 /* spelling-bee Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		53B2CC402EFA6030009167B7 /* spelling-bee iOS App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CC502EFA6040009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS App" */;
+			buildPhases = (
+				53B2CC312EFA6021009167B7 /* Sources */,
+				53B2CC302EFA6020009167B7 /* Frameworks */,
+				53B2CC322EFA6022009167B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "spelling-bee iOS App";
+			productName = "spelling-bee iOS App";
+			productReference = 53B2CC002EFA6000009167B7 /* spelling-bee iOS App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		53B2CE012EFC0001009167B7 /* spelling-bee iOS AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CE0A2EFC000A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS AppTests" */;
+			buildPhases = (
+				53B2CE022EFC0002009167B7 /* Sources */,
+				53B2CE032EFC0003009167B7 /* Frameworks */,
+				53B2CE042EFC0004009167B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				53B2CE092EFC0009009167B7 /* PBXTargetDependency */,
+			);
+			name = "spelling-bee iOS AppTests";
+			productName = "spelling-bee iOS AppTests";
+			productReference = 53B2CE002EFC0000009167B7 /* spelling-bee iOS AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		53B2CE102EFC0010009167B7 /* spelling-bee iOS AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53B2CE1C2EFC001C009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS AppUITests" */;
+			buildPhases = (
+				53B2CE122EFC0012009167B7 /* Sources */,
+				53B2CE132EFC0013009167B7 /* Frameworks */,
+				53B2CE142EFC0014009167B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				53B2CE1B2EFC001B009167B7 /* PBXTargetDependency */,
+			);
+			name = "spelling-bee iOS AppUITests";
+			productName = "spelling-bee iOS AppUITests";
+			productReference = 53B2CE112EFC0011009167B7 /* spelling-bee iOS AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		53B2CB442EFA4E16009167B7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					53B2CB492EFA4E17009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					53B2CB4F2EFA4E17009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					53B2CB612EFA4E1A009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 53B2CB4F2EFA4E17009167B7;
+					};
+					53B2CB6B2EFA4E1A009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 53B2CB4F2EFA4E17009167B7;
+					};
+					53B2CC402EFA6030009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					53B2CE012EFC0001009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 53B2CC402EFA6030009167B7;
+					};
+					53B2CE102EFC0010009167B7 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 53B2CC402EFA6030009167B7;
+					};
+				};
+			};
+			buildConfigurationList = 53B2CB472EFA4E16009167B7 /* Build configuration list for PBXProject "spelling-bee" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 53B2CB432EFA4E16009167B7;
+			productRefGroup = 53B2CB4B2EFA4E17009167B7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				53B2CB492EFA4E17009167B7 /* spelling-bee */,
+				53B2CB4F2EFA4E17009167B7 /* spelling-bee Watch App */,
+				53B2CC402EFA6030009167B7 /* spelling-bee iOS App */,
+				53B2CB612EFA4E1A009167B7 /* spelling-bee Watch AppTests */,
+				53B2CB6B2EFA4E1A009167B7 /* spelling-bee Watch AppUITests */,
+				53B2CE012EFC0001009167B7 /* spelling-bee iOS AppTests */,
+				53B2CE102EFC0010009167B7 /* spelling-bee iOS AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		53B2CB482EFA4E17009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB4E2EFA4E17009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CB5D2EFA4E1A009167B7 /* Preview Assets.xcassets in Resources */,
+				53B2CB5A2EFA4E1A009167B7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB602EFA4E1A009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB6A2EFA4E1A009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CC322EFA6022009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CE042EFC0004009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CE142EFC0014009167B7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		53B2CB4C2EFA4E17009167B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CB582EFA4E17009167B7 /* ContentView.swift in Sources */,
+				53B2CB562EFA4E17009167B7 /* spelling_beeApp.swift in Sources */,
+				53B2CB832EFA5000009167B7 /* UserProfile.swift in Sources */,
+				53B2CB852EFA5001009167B7 /* Word.swift in Sources */,
+				53B2CB872EFA5002009167B7 /* WordBankService.swift in Sources */,
+				53B2CB892EFA5003009167B7 /* SpeechService.swift in Sources */,
+				53B2CB8B2EFA5004009167B7 /* PersistenceService.swift in Sources */,
+				53B2CD072EFB0004009167B7 /* StoreManager.swift in Sources */,
+				53B2CB8D2EFA5005009167B7 /* AppState.swift in Sources */,
+				53B2CB8F2EFA5006009167B7 /* GameViewModel.swift in Sources */,
+				53B2CB912EFA5007009167B7 /* OnboardingView.swift in Sources */,
+				53B2CB932EFA5008009167B7 /* HomeView.swift in Sources */,
+				53B2CB952EFA5009009167B7 /* SettingsView.swift in Sources */,
+				53B2CB972EFA500A009167B7 /* GameView.swift in Sources */,
+				53B2CB992EFA500B009167B7 /* FeedbackView.swift in Sources */,
+				53B2CB9B2EFA500C009167B7 /* LevelCompleteView.swift in Sources */,
+				53B2CF212EFD0021009167B7 /* SyncableProfile.swift in Sources */,
+				53B2CF222EFD0022009167B7 /* SyncServiceProtocol.swift in Sources */,
+				53B2CF232EFD0023009167B7 /* LocalCacheService.swift in Sources */,
+				53B2CF252EFD0025009167B7 /* SyncCoordinator.swift in Sources */,
+				53B2CF262EFD0026009167B7 /* WatchSyncHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB5E2EFA4E1A009167B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CB672EFA4E1A009167B7 /* spelling_bee_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CB682EFA4E1A009167B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CB712EFA4E1A009167B7 /* spelling_bee_Watch_AppUITests.swift in Sources */,
+				53B2CB732EFA4E1A009167B7 /* spelling_bee_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CC312EFA6021009167B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CC012EFA6000009167B7 /* spelling_bee_iOS_App.swift in Sources */,
+				53B2CC022EFA6001009167B7 /* ContentView.swift in Sources */,
+				53B2CC032EFA6002009167B7 /* UserProfile.swift in Sources */,
+				53B2CC042EFA6003009167B7 /* Word.swift in Sources */,
+				53B2CC052EFA6004009167B7 /* SpeechService.swift in Sources */,
+				53B2CC062EFA6005009167B7 /* WordBankService.swift in Sources */,
+				53B2CC072EFA6006009167B7 /* PersistenceService.swift in Sources */,
+				53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */,
+				53B2CD032EFB0002009167B7 /* AdManager.swift in Sources */,
+				53B2CC082EFA6007009167B7 /* AppState.swift in Sources */,
+				53B2CC092EFA6008009167B7 /* GameViewModel.swift in Sources */,
+				53B2CC0A2EFA6009009167B7 /* OnboardingView.swift in Sources */,
+				53B2CC0B2EFA600A009167B7 /* HomeView.swift in Sources */,
+				53B2CC0C2EFA600B009167B7 /* SettingsView.swift in Sources */,
+				53B2CD052EFB0003009167B7 /* ParentGateView.swift in Sources */,
+				53B2CC0D2EFA600C009167B7 /* GameView.swift in Sources */,
+				53B2CC0E2EFA600D009167B7 /* FeedbackView.swift in Sources */,
+				53B2CC0F2EFA600E009167B7 /* LevelCompleteView.swift in Sources */,
+				53B2CF112EFD0011009167B7 /* SyncableProfile.swift in Sources */,
+				53B2CF122EFD0012009167B7 /* SyncServiceProtocol.swift in Sources */,
+				53B2CF132EFD0013009167B7 /* LocalCacheService.swift in Sources */,
+				53B2CF152EFD0015009167B7 /* SyncCoordinator.swift in Sources */,
+				53B2CF272EFD0027009167B7 /* PhoneSyncHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CE022EFC0002009167B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CE072EFC0007009167B7 /* spelling_bee_iOS_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53B2CE122EFC0012009167B7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53B2CE182EFC0018009167B7 /* spelling_bee_iOS_AppUITests.swift in Sources */,
+				53B2CE192EFC0019009167B7 /* spelling_bee_iOS_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		53B2CB532EFA4E17009167B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53B2CB4F2EFA4E17009167B7 /* spelling-bee Watch App */;
+			targetProxy = 53B2CB522EFA4E17009167B7 /* PBXContainerItemProxy */;
+		};
+		53B2CB642EFA4E1A009167B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53B2CB4F2EFA4E17009167B7 /* spelling-bee Watch App */;
+			targetProxy = 53B2CB632EFA4E1A009167B7 /* PBXContainerItemProxy */;
+		};
+		53B2CB6E2EFA4E1A009167B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53B2CB4F2EFA4E17009167B7 /* spelling-bee Watch App */;
+			targetProxy = 53B2CB6D2EFA4E1A009167B7 /* PBXContainerItemProxy */;
+		};
+		53B2CE092EFC0009009167B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53B2CC402EFA6030009167B7 /* spelling-bee iOS App */;
+			targetProxy = 53B2CE082EFC0008009167B7 /* PBXContainerItemProxy */;
+		};
+		53B2CE1B2EFC001B009167B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53B2CC402EFA6030009167B7 /* spelling-bee iOS App */;
+			targetProxy = 53B2CE1A2EFC001A009167B7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		53B2CB742EFA4E1A009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		53B2CB752EFA4E1A009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		53B2CB772EFA4E1A009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"spelling-bee Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Spellflare;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Spellflare uses the microphone to listen to your spelling";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Spellflare needs to hear you spell words";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		53B2CB782EFA4E1A009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"spelling-bee Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Spellflare;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Spellflare uses the microphone to listen to your spelling";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Spellflare needs to hear you spell words";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		53B2CB7B2EFA4E1A009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				INFOPLIST_KEY_CFBundleDisplayName = Spellflare;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		53B2CB7C2EFA4E1A009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				INFOPLIST_KEY_CFBundleDisplayName = Spellflare;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		53B2CB7E2EFA4E1A009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spelling-bee Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/spelling-bee Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		53B2CB7F2EFA4E1A009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spelling-bee Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/spelling-bee Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		53B2CB812EFA4E1A009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "spelling-bee Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		53B2CB822EFA4E1A009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "spelling-bee Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		53B2CC512EFA6041009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Spellflare;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Spellflare uses the microphone to listen to your spelling";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Spellflare needs to hear you spell words";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		53B2CC522EFA6042009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Spellflare;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Spellflare uses the microphone to listen to your spelling";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Spellflare needs to hear you spell words";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		53B2CE0B2EFC000B009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-iOS-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spelling-bee iOS App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/spelling-bee iOS App";
+			};
+			name = Debug;
+		};
+		53B2CE0C2EFC000C009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F5D5362ZUD;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-iOS-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/spelling-bee iOS App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/spelling-bee iOS App";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		53B2CE1D2EFC001D009167B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-iOS-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "spelling-bee iOS App";
+			};
+			name = Debug;
+		};
+		53B2CE1E2EFC001E009167B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-iOS-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "spelling-bee iOS App";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		53B2CB472EFA4E16009167B7 /* Build configuration list for PBXProject "spelling-bee" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CB742EFA4E1A009167B7 /* Debug */,
+				53B2CB752EFA4E1A009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CB762EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CB772EFA4E1A009167B7 /* Debug */,
+				53B2CB782EFA4E1A009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CB7A2EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CB7B2EFA4E1A009167B7 /* Debug */,
+				53B2CB7C2EFA4E1A009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CB7D2EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CB7E2EFA4E1A009167B7 /* Debug */,
+				53B2CB7F2EFA4E1A009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CB802EFA4E1A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CB812EFA4E1A009167B7 /* Debug */,
+				53B2CB822EFA4E1A009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CC502EFA6040009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CC512EFA6041009167B7 /* Debug */,
+				53B2CC522EFA6042009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CE0A2EFC000A009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CE0B2EFC000B009167B7 /* Debug */,
+				53B2CE0C2EFC000C009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		53B2CE1C2EFC001C009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53B2CE1D2EFC001D009167B7 /* Debug */,
+				53B2CE1E2EFC001E009167B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 53B2CB442EFA4E16009167B7 /* Project object */;
+}
