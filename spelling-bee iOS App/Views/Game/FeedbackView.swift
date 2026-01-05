@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FeedbackView: View {
     @ObservedObject var viewModel: GameViewModel
-    @Binding var useKeyboardMode: Bool
 
     @State private var iconScale: CGFloat = 0
     @State private var textOpacity: Double = 0
@@ -118,7 +117,6 @@ struct FeedbackView: View {
                         // Show keyboard option after 2 retries
                         if viewModel.shouldShowKeyboardHint {
                             Button {
-                                useKeyboardMode = true
                                 viewModel.switchToKeyboard()
                             } label: {
                                 Label("Use Keyboard", systemImage: "keyboard")
@@ -427,7 +425,7 @@ struct FeedbackView_Previews: PreviewProvider {
             )
             .ignoresSafeArea()
 
-            FeedbackView(viewModel: GameViewModel(), useKeyboardMode: .constant(false))
+            FeedbackView(viewModel: GameViewModel())
         }
     }
 }

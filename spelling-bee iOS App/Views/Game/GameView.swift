@@ -11,7 +11,6 @@ struct GameView: View {
     @EnvironmentObject var appState: AppState
     @StateObject private var viewModel = GameViewModel()
     @State private var showVoicePicker = false
-    @State private var useKeyboardMode = false
 
     let level: Int
 
@@ -56,9 +55,9 @@ struct GameView: View {
                 case .presenting:
                     WordPresentationView(viewModel: viewModel)
                 case .spelling:
-                    SpellingInputView(viewModel: viewModel, initialKeyboardMode: $useKeyboardMode)
+                    SpellingInputView(viewModel: viewModel)
                 case .feedback:
-                    FeedbackView(viewModel: viewModel, useKeyboardMode: $useKeyboardMode)
+                    FeedbackView(viewModel: viewModel)
                 case .levelComplete:
                     LevelCompleteView(viewModel: viewModel, level: level)
                 }
@@ -298,7 +297,6 @@ struct SpellingInputView: View {
     @State private var isRecording = false
     @State private var pulseAnimation = false
     @State private var useKeyboard = false
-    @Binding var initialKeyboardMode: Bool
     @State private var keyboardInput = ""
     @FocusState private var isKeyboardFocused: Bool
     @State private var hasRecordedInThisAttempt = false
@@ -325,7 +323,6 @@ struct SpellingInputView: View {
 
                     Button {
                         useKeyboard = true
-                        initialKeyboardMode = true
                         viewModel.hasSeenKeyboardHint = true
                     } label: {
                         Label("Use Keyboard", systemImage: "keyboard")
@@ -385,8 +382,8 @@ struct SpellingInputView: View {
             isRecording = false
             hasRecordedInThisAttempt = false
 
-            // Set initial keyboard mode from parent
-            useKeyboard = initialKeyboardMode
+            // Always start with speech recognition mode for each new word
+            useKeyboard = false
         }
         .onDisappear {
             if isRecording {
