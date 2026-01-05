@@ -12,6 +12,7 @@
 		53B2CC032EFA6002009167B7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC122EFA6002009167B7 /* UserProfile.swift */; };
 		53B2CC042EFA6003009167B7 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC132EFA6003009167B7 /* Word.swift */; };
 		53B2CC052EFA6004009167B7 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC142EFA6004009167B7 /* SpeechService.swift */; };
+		30DA3C59B1C7459D8BA15755 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */; };
 		53B2CC062EFA6005009167B7 /* WordBankService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC152EFA6005009167B7 /* WordBankService.swift */; };
 		53B2CC072EFA6006009167B7 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC162EFA6006009167B7 /* PersistenceService.swift */; };
 		53B2CC082EFA6007009167B7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC172EFA6007009167B7 /* AppState.swift */; };
@@ -23,6 +24,7 @@
 		53B2CC0E2EFA600D009167B7 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */; };
 		53B2CC0F2EFA600E009167B7 /* LevelCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */; };
 		53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53B2CC612EFA7001009167B7 /* Assets.xcassets */; };
+		B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Audio */; };
 		53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD002EFB0001009167B7 /* StoreManager.swift */; };
 		53B2CD032EFB0002009167B7 /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD022EFB0002009167B7 /* AdManager.swift */; };
 		53B2CD052EFB0003009167B7 /* ParentGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD042EFB0003009167B7 /* ParentGateView.swift */; };
@@ -74,6 +76,7 @@
 		53B2CC122EFA6002009167B7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		53B2CC132EFA6003009167B7 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		53B2CC142EFA6004009167B7 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
+		2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaybackService.swift; sourceTree = "<group>"; };
 		53B2CC152EFA6005009167B7 /* WordBankService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBankService.swift; sourceTree = "<group>"; };
 		53B2CC162EFA6006009167B7 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		53B2CC172EFA6007009167B7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -85,6 +88,7 @@
 		53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCompleteView.swift; sourceTree = "<group>"; };
 		53B2CC612EFA7001009167B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CF32531B97AF4BADAD29C8A7 /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
 		53B2CD002EFB0001009167B7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		53B2CD022EFB0002009167B7 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
 		53B2CD042EFB0003009167B7 /* ParentGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentGateView.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 				53B2CC232EFA6013009167B7 /* ViewModels */,
 				53B2CC242EFA6014009167B7 /* Views */,
 				53B2CC612EFA7001009167B7 /* Assets.xcassets */,
+				CF32531B97AF4BADAD29C8A7 /* Audio */,
 			);
 			path = "spelling-bee iOS App";
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				53B2CC142EFA6004009167B7 /* SpeechService.swift */,
+				2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */,
 				53B2CC152EFA6005009167B7 /* WordBankService.swift */,
 				53B2CC162EFA6006009167B7 /* PersistenceService.swift */,
 				53B2CD002EFB0001009167B7 /* StoreManager.swift */,
@@ -422,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */,
+				B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +458,7 @@
 				53B2CC032EFA6002009167B7 /* UserProfile.swift in Sources */,
 				53B2CC042EFA6003009167B7 /* Word.swift in Sources */,
 				53B2CC052EFA6004009167B7 /* SpeechService.swift in Sources */,
+				30DA3C59B1C7459D8BA15755 /* AudioPlaybackService.swift in Sources */,
 				53B2CC062EFA6005009167B7 /* WordBankService.swift in Sources */,
 				53B2CC072EFA6006009167B7 /* PersistenceService.swift in Sources */,
 				53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */,

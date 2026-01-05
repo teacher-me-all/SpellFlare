@@ -90,6 +90,11 @@ class GameViewModel: ObservableObject {
     private func beginActualTest() {
         let words = wordBank.getWords(grade: pendingGrade, level: pendingLevel, count: 15)
         session = GameSession(level: pendingLevel, grade: pendingGrade, words: words)
+
+        // Set difficulty for audio playback
+        let difficulty = min(pendingGrade + (pendingLevel - 1) / 10, 12)
+        speechService.setDifficulty(difficulty)
+
         phase = .presenting
         presentCurrentWord()
     }

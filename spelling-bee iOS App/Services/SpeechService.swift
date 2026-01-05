@@ -15,7 +15,13 @@ struct VoiceOption: Identifiable, Equatable, Hashable {
     let name: String
     let language: String
 
-    static let defaultVoice = VoiceOption(id: "com.apple.ttsbundle.Samantha-compact", name: "Samantha", language: "en-US")
+    static let lisaAI = VoiceOption(
+        id: "com.spellflare.lisa-ai",
+        name: "Lisa (AI)",
+        language: "en-US"
+    )
+
+    static let defaultVoice = lisaAI
 }
 
 @MainActor
@@ -41,6 +47,8 @@ class SpeechService: NSObject, ObservableObject {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
+    private let audioService = AudioPlaybackService.shared
+    private var currentDifficulty: Int = 1
 
     // MARK: - Initialization
     override init() {
@@ -54,6 +62,10 @@ class SpeechService: NSObject, ObservableObject {
     // MARK: - Voice Management
 
     private func loadAvailableVoices() {
+        // Add Lisa (AI) as first option
+        availableVoices = [VoiceOption.lisaAI]
+
+        // Then add system voices
         let voices = AVSpeechSynthesisVoice.speechVoices()
 
         // Only include these specific voices (kid-friendly)
@@ -63,7 +75,7 @@ class SpeechService: NSObject, ObservableObject {
         ]
 
         // Filter to allowed English voices and create options
-        availableVoices = voices
+        let systemVoices = voices
             .filter { $0.language.starts(with: "en") }
             .filter { allowedVoices.contains($0.name.lowercased()) }
             .map { voice in
@@ -74,13 +86,15 @@ class SpeechService: NSObject, ObservableObject {
 
         // Remove duplicates by name
         var seen = Set<String>()
-        availableVoices = availableVoices.filter { voice in
+        let filtered = systemVoices.filter { voice in
             if seen.contains(voice.name) {
                 return false
             }
             seen.insert(voice.name)
             return true
         }
+
+        availableVoices.append(contentsOf: filtered)
     }
 
     private func loadSavedVoice() {
@@ -99,13 +113,37 @@ class SpeechService: NSObject, ObservableObject {
     func previewVoiceWithWord(_ voice: VoiceOption, word: String?) {
         stopSpeaking()
         let text = word ?? "Hello, I am \(voice.name)"
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
-        if let avVoice = AVSpeechSynthesisVoice(identifier: voice.id) {
-            utterance.voice = avVoice
+
+        if voice.id == "com.spellflare.lisa-ai" {
+            isSpeaking = true
+            if let word = word {
+                audioService.playWord(word, difficulty: currentDifficulty) {
+                    self.isSpeaking = false
+                }
+            } else {
+                // Speak the hello message with system voice for preview
+                let utterance = AVSpeechUtterance(string: text)
+                utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
+                if let avVoice = AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.Samantha-compact") {
+                    utterance.voice = avVoice
+                }
+                isSpeaking = true
+                synthesizer.speak(utterance)
+            }
+        } else {
+            // Existing code for system voices
+            let utterance = AVSpeechUtterance(string: text)
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
+            if let avVoice = AVSpeechSynthesisVoice(identifier: voice.id) {
+                utterance.voice = avVoice
+            }
+            isSpeaking = true
+            synthesizer.speak(utterance)
         }
-        isSpeaking = true
-        synthesizer.speak(utterance)
+    }
+
+    func setDifficulty(_ difficulty: Int) {
+        currentDifficulty = difficulty
     }
 
     // MARK: - Authorization
@@ -128,17 +166,31 @@ class SpeechService: NSObject, ObservableObject {
 
     func speakWord(_ word: String) {
         stopSpeaking()
-        isSpeaking = true
 
-        // Add 1 second delay before speaking the word
-        Task {
-            try? await Task.sleep(nanoseconds: 1_000_000_000)
-            await MainActor.run {
-                let utterance = AVSpeechUtterance(string: word)
-                utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9 // 90% of original speed
-                utterance.pitchMultiplier = 1.0
-                utterance.voice = self.getSelectedAVVoice()
-                self.synthesizer.speak(utterance)
+        // Check if Lisa(AI) is selected
+        if selectedVoice.id == "com.spellflare.lisa-ai" {
+            // Use pre-generated audio
+            isSpeaking = true
+            Task {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)  // Keep 1s delay
+                await MainActor.run {
+                    audioService.playWord(word, difficulty: currentDifficulty) {
+                        self.isSpeaking = false
+                    }
+                }
+            }
+        } else {
+            // Use AVSpeechSynthesizer (existing code)
+            isSpeaking = true
+            Task {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                await MainActor.run {
+                    let utterance = AVSpeechUtterance(string: word)
+                    utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9 // 90% of original speed
+                    utterance.pitchMultiplier = 1.0
+                    utterance.voice = self.getSelectedAVVoice()
+                    self.synthesizer.speak(utterance)
+                }
             }
         }
     }
@@ -146,32 +198,49 @@ class SpeechService: NSObject, ObservableObject {
     func spellWord(_ word: String) {
         stopSpeaking()
 
-        let letters = word.uppercased().map { String($0) }.joined(separator: ", ")
-        let utterance = AVSpeechUtterance(string: letters)
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.6
-        utterance.pitchMultiplier = 1.0
-        utterance.voice = getSelectedAVVoice()
+        if selectedVoice.id == "com.spellflare.lisa-ai" {
+            isSpeaking = true
+            audioService.playSpelling(word, difficulty: currentDifficulty) {
+                self.isSpeaking = false
+            }
+        } else {
+            // Existing AVSpeechSynthesizer code
+            let letters = word.uppercased().map { String($0) }.joined(separator: ", ")
+            let utterance = AVSpeechUtterance(string: letters)
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.6
+            utterance.pitchMultiplier = 1.0
+            utterance.voice = getSelectedAVVoice()
 
-        isSpeaking = true
-        synthesizer.speak(utterance)
+            isSpeaking = true
+            synthesizer.speak(utterance)
+        }
     }
 
     func speakFeedback(_ message: String) {
         stopSpeaking()
 
-        let utterance = AVSpeechUtterance(string: message)
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        utterance.pitchMultiplier = 1.1
-        utterance.voice = getSelectedAVVoice()
+        if selectedVoice.id == "com.spellflare.lisa-ai" {
+            isSpeaking = true
+            audioService.playFeedback(message) {
+                self.isSpeaking = false
+            }
+        } else {
+            // Existing AVSpeechSynthesizer code
+            let utterance = AVSpeechUtterance(string: message)
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            utterance.pitchMultiplier = 1.1
+            utterance.voice = getSelectedAVVoice()
 
-        isSpeaking = true
-        synthesizer.speak(utterance)
+            isSpeaking = true
+            synthesizer.speak(utterance)
+        }
     }
 
     func stopSpeaking() {
         if synthesizer.isSpeaking {
             synthesizer.stopSpeaking(at: .immediate)
         }
+        audioService.stop()  // Also stop audio playback
         isSpeaking = false
     }
 
