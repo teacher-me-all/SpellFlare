@@ -7,6 +7,7 @@ class AudioPlaybackService: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var isPlaying = false
     private var audioPlayer: AVAudioPlayer?
     private var completionHandler: (() -> Void)?
+    private var currentVoice: String = "Lisa"  // Default voice
 
     private override init() {
         super.init()
@@ -14,28 +15,33 @@ class AudioPlaybackService: NSObject, ObservableObject, AVAudioPlayerDelegate {
 
     // MARK: - Public Methods
 
+    /// Set the current AI voice to use
+    func setVoice(_ voiceName: String) {
+        currentVoice = voiceName
+    }
+
     /// Play word pronunciation
     func playWord(_ word: String, difficulty: Int, completion: (() -> Void)? = nil) {
-        let path = "Audio/words/difficulty_\(difficulty)/\(word.lowercased())"
+        let path = "Audio/\(currentVoice)/words/difficulty_\(difficulty)/\(word.lowercased())"
         playAudioFile(path, completion: completion)
     }
 
     /// Play letter-by-letter spelling
     func playSpelling(_ word: String, difficulty: Int, completion: (() -> Void)? = nil) {
-        let path = "Audio/spelling/difficulty_\(difficulty)/\(word.lowercased())_spelled"
+        let path = "Audio/\(currentVoice)/spelling/difficulty_\(difficulty)/\(word.lowercased())_spelled"
         playAudioFile(path, completion: completion)
     }
 
     /// Play single letter
     func playLetter(_ letter: String, completion: (() -> Void)? = nil) {
-        let path = "Audio/letters/\(letter.lowercased())"
+        let path = "Audio/\(currentVoice)/letters/\(letter.lowercased())"
         playAudioFile(path, completion: completion)
     }
 
     /// Play feedback message
     func playFeedback(_ message: String, completion: (() -> Void)? = nil) {
         let filename = mapFeedbackToFile(message)
-        let path = "Audio/feedback/\(filename)"
+        let path = "Audio/\(currentVoice)/feedback/\(filename)"
         playAudioFile(path, completion: completion)
     }
 

@@ -115,6 +115,7 @@ class SpeechService: NSObject, ObservableObject {
         let text = word ?? "Hello, I am \(voice.name)"
 
         if voice.id == "com.spellflare.lisa-ai" {
+            audioService.setVoice("Lisa")
             isSpeaking = true
             if let word = word {
                 audioService.playWord(word, difficulty: currentDifficulty) {
@@ -169,6 +170,9 @@ class SpeechService: NSObject, ObservableObject {
 
         // Check if Lisa(AI) is selected
         if selectedVoice.id == "com.spellflare.lisa-ai" {
+            // Set the voice in AudioPlaybackService
+            audioService.setVoice("Lisa")
+
             // Use pre-generated audio
             isSpeaking = true
             Task {
@@ -199,6 +203,7 @@ class SpeechService: NSObject, ObservableObject {
         stopSpeaking()
 
         if selectedVoice.id == "com.spellflare.lisa-ai" {
+            audioService.setVoice("Lisa")
             isSpeaking = true
             audioService.playSpelling(word, difficulty: currentDifficulty) {
                 self.isSpeaking = false
@@ -220,6 +225,7 @@ class SpeechService: NSObject, ObservableObject {
         stopSpeaking()
 
         if selectedVoice.id == "com.spellflare.lisa-ai" {
+            audioService.setVoice("Lisa")
             isSpeaking = true
             audioService.playFeedback(message) {
                 self.isSpeaking = false
