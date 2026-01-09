@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.google.GoogleMobileAds.dSYM</string>
+    <key>CFBundleVersion</key>
+    <string>11.13.0</string>
+    <key>dSYM_UUID</key>
+    <string>8588494D-0AA2-3721-989E-24F6706B371C</string>
+</dict>
+</plist>

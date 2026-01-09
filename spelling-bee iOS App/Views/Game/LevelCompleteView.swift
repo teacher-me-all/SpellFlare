@@ -115,7 +115,7 @@ struct LevelCompleteView: View {
             adManager.onTestCompleted()
         }
         .fullScreenCover(isPresented: $showAd) {
-            PlaceholderAdView(onDismiss: {
+            PostTestAdView(onDismiss: {
                 showAd = false
                 // Execute the pending navigation action
                 if let action = pendingAction {
@@ -130,7 +130,6 @@ struct LevelCompleteView: View {
         // Check if we should show an ad before navigating
         if adManager.shouldShowAd && !storeManager.isAdsRemoved {
             pendingAction = action
-            adManager.prepareToShowAd()
             showAd = true
         } else {
             // No ad needed, navigate directly

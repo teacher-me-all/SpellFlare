@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleMobileAds
 
 // MARK: - UI Testing Configuration
 struct UITestingConfig {
@@ -56,6 +57,12 @@ struct spelling_bee_iOS_App: App {
         } else {
             _storeManager = StateObject(wrappedValue: StoreManager.shared)
             _appState = StateObject(wrappedValue: AppState())
+        }
+
+        // CRITICAL: Initialize Google Mobile Ads SDK at app launch
+        // This must happen before any ad requests
+        Task { @MainActor in
+            AdManager.shared.initializeSDK()
         }
     }
 

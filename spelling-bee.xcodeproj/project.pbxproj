@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30DA3C59B1C7459D8BA15755 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */; };
+		4582A056AC992458F92E1A37 /* Pods_spelling_bee_iOS_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76E914314266D7F94B9E0EB /* Pods_spelling_bee_iOS_App.framework */; };
 		53B2CC012EFA6000009167B7 /* spelling_bee_iOS_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC102EFA6000009167B7 /* spelling_bee_iOS_App.swift */; };
 		53B2CC022EFA6001009167B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC112EFA6001009167B7 /* ContentView.swift */; };
 		53B2CC032EFA6002009167B7 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC122EFA6002009167B7 /* UserProfile.swift */; };
 		53B2CC042EFA6003009167B7 /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC132EFA6003009167B7 /* Word.swift */; };
 		53B2CC052EFA6004009167B7 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC142EFA6004009167B7 /* SpeechService.swift */; };
-		30DA3C59B1C7459D8BA15755 /* AudioPlaybackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */; };
 		53B2CC062EFA6005009167B7 /* WordBankService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC152EFA6005009167B7 /* WordBankService.swift */; };
 		53B2CC072EFA6006009167B7 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC162EFA6006009167B7 /* PersistenceService.swift */; };
 		53B2CC082EFA6007009167B7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC172EFA6007009167B7 /* AppState.swift */; };
@@ -24,7 +25,6 @@
 		53B2CC0E2EFA600D009167B7 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */; };
 		53B2CC0F2EFA600E009167B7 /* LevelCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */; };
 		53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53B2CC612EFA7001009167B7 /* Assets.xcassets */; };
-		B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Audio */; };
 		53B2CD012EFB0001009167B7 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD002EFB0001009167B7 /* StoreManager.swift */; };
 		53B2CD032EFB0002009167B7 /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD022EFB0002009167B7 /* AdManager.swift */; };
 		53B2CD052EFB0003009167B7 /* ParentGateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CD042EFB0003009167B7 /* ParentGateView.swift */; };
@@ -36,6 +36,7 @@
 		53B2CF132EFD0013009167B7 /* LocalCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF032EFD0003009167B7 /* LocalCacheService.swift */; };
 		53B2CF152EFD0015009167B7 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */; };
 		53B2CF272EFD0027009167B7 /* PhoneSyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF072EFD0007009167B7 /* PhoneSyncHelper.swift */; };
+		B66F95FC3EAC45E1BFA1E7E4 /* Resources/Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Resources/Audio */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		040941BA4CC6094C6D148752 /* Pods-spelling-bee iOS App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spelling-bee iOS App.release.xcconfig"; path = "Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App.release.xcconfig"; sourceTree = "<group>"; };
+		2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaybackService.swift; sourceTree = "<group>"; };
+		31E61ADECD5FF68699C3AC49 /* Pods-spelling-bee iOS App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spelling-bee iOS App.debug.xcconfig"; path = "Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App.debug.xcconfig"; sourceTree = "<group>"; };
 		53B2CB4A2EFA4E17009167B7 /* spelling-bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53B2CC002EFA6000009167B7 /* spelling-bee iOS App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee iOS App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53B2CC102EFA6000009167B7 /* spelling_bee_iOS_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = spelling_bee_iOS_App.swift; sourceTree = "<group>"; };
@@ -76,7 +80,6 @@
 		53B2CC122EFA6002009167B7 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		53B2CC132EFA6003009167B7 /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		53B2CC142EFA6004009167B7 /* SpeechService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechService.swift; sourceTree = "<group>"; };
-		2CF4E0660AFA444A918CEE5C /* AudioPlaybackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaybackService.swift; sourceTree = "<group>"; };
 		53B2CC152EFA6005009167B7 /* WordBankService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBankService.swift; sourceTree = "<group>"; };
 		53B2CC162EFA6006009167B7 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		53B2CC172EFA6007009167B7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -88,7 +91,6 @@
 		53B2CC1D2EFA600D009167B7 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		53B2CC1E2EFA600E009167B7 /* LevelCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCompleteView.swift; sourceTree = "<group>"; };
 		53B2CC612EFA7001009167B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CF32531B97AF4BADAD29C8A7 /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
 		53B2CD002EFB0001009167B7 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		53B2CD022EFB0002009167B7 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
 		53B2CD042EFB0003009167B7 /* ParentGateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentGateView.swift; sourceTree = "<group>"; };
@@ -102,6 +104,8 @@
 		53B2CF032EFD0003009167B7 /* LocalCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCacheService.swift; sourceTree = "<group>"; };
 		53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		53B2CF072EFD0007009167B7 /* PhoneSyncHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneSyncHelper.swift; sourceTree = "<group>"; };
+		A76E914314266D7F94B9E0EB /* Pods_spelling_bee_iOS_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spelling_bee_iOS_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF32531B97AF4BADAD29C8A7 /* Resources/Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4582A056AC992458F92E1A37 /* Pods_spelling_bee_iOS_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +142,8 @@
 				53B2CE052EFC0005009167B7 /* spelling-bee iOS AppTests */,
 				53B2CE152EFC0015009167B7 /* spelling-bee iOS AppUITests */,
 				53B2CB4B2EFA4E17009167B7 /* Products */,
+				BBFC945EDBFDE4CC58194F49 /* Pods */,
+				FB34AFC5F44E456AF9A4B027 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,7 +168,7 @@
 				53B2CC232EFA6013009167B7 /* ViewModels */,
 				53B2CC242EFA6014009167B7 /* Views */,
 				53B2CC612EFA7001009167B7 /* Assets.xcassets */,
-				CF32531B97AF4BADAD29C8A7 /* Audio */,
+				CF32531B97AF4BADAD29C8A7 /* Resources/Audio */,
 			);
 			path = "spelling-bee iOS App";
 			sourceTree = "<group>";
@@ -296,6 +303,23 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		BBFC945EDBFDE4CC58194F49 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				31E61ADECD5FF68699C3AC49 /* Pods-spelling-bee iOS App.debug.xcconfig */,
+				040941BA4CC6094C6D148752 /* Pods-spelling-bee iOS App.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FB34AFC5F44E456AF9A4B027 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A76E914314266D7F94B9E0EB /* Pods_spelling_bee_iOS_App.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -319,9 +343,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 53B2CC502EFA6040009167B7 /* Build configuration list for PBXNativeTarget "spelling-bee iOS App" */;
 			buildPhases = (
+				55866E791B5D6AA3A1A865FE /* [CP] Check Pods Manifest.lock */,
 				53B2CC312EFA6021009167B7 /* Sources */,
 				53B2CC302EFA6020009167B7 /* Frameworks */,
 				53B2CC322EFA6022009167B7 /* Resources */,
+				BAED1708D7F649D1B0C6FCBC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -428,7 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */,
-				B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */,
+				B66F95FC3EAC45E1BFA1E7E4 /* Resources/Audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +473,52 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		55866E791B5D6AA3A1A865FE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-spelling-bee iOS App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BAED1708D7F649D1B0C6FCBC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		53B2CC312EFA6021009167B7 /* Sources */ = {
@@ -663,6 +735,7 @@
 		};
 		53B2CC512EFA6041009167B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 31E61ADECD5FF68699C3AC49 /* Pods-spelling-bee iOS App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -670,11 +743,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F5D5362ZUD;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = SpellFlare;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SpellFlare uses the microphone to listen to your spelling";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SpellFlare needs to hear you spell words";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "spelling-bee iOS App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -685,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -697,6 +767,7 @@
 		};
 		53B2CC522EFA6042009167B7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 040941BA4CC6094C6D148752 /* Pods-spelling-bee iOS App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -704,11 +775,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F5D5362ZUD;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = SpellFlare;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SpellFlare uses the microphone to listen to your spelling";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SpellFlare needs to hear you spell words";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "spelling-bee iOS App/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -719,7 +787,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
