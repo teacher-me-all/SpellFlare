@@ -42,17 +42,22 @@ class WordBankService {
         let levelBonus = (level - 1) / 10
         let difficulty = min(baseDifficulty + levelBonus, 12)
 
-        var availableWords: [String] = []
+        // Track words with their actual source difficulty
+        var availableWords: [(text: String, difficulty: Int)] = []
 
         for diff in max(1, difficulty - 1)...min(difficulty + 1, 12) {
             if let words = wordsByDifficulty[diff] {
-                availableWords.append(contentsOf: words)
+                // Store each word with its actual difficulty
+                for word in words {
+                    availableWords.append((text: word, difficulty: diff))
+                }
             }
         }
 
         let shuffled = availableWords.shuffled()
         let selected = Array(shuffled.prefix(count))
 
-        return selected.map { Word(text: $0, difficulty: difficulty) }
+        // Create Word objects with correct difficulty for each word
+        return selected.map { Word(text: $0.text, difficulty: $0.difficulty) }
     }
 }

@@ -57,7 +57,7 @@ class AudioPlaybackService: NSObject, ObservableObject, AVAudioPlayerDelegate {
     private func playAudioFile(_ resourcePath: String, completion: (() -> Void)?) {
         // Try to load audio file from bundle
         guard let url = Bundle.main.url(forResource: resourcePath, withExtension: "wav") else {
-            print("⚠️ Audio file not found: \(resourcePath).wav")
+            print("❌ Audio file not found: \(resourcePath).wav")
             completion?()
             return
         }

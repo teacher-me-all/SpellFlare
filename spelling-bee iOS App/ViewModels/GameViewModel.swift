@@ -110,12 +110,12 @@ class GameViewModel: ObservableObject {
         hasSeenKeyboardHint = false
 
         phase = .presenting
-        speechService.speakWord(word.text)
+        speechService.speakWord(word.text, difficulty: word.difficulty)
     }
 
     func repeatWord() {
         guard let word = currentWord else { return }
-        speechService.speakWord(word.text)
+        speechService.speakWord(word.text, difficulty: word.difficulty)
     }
 
     func startSpelling() {
@@ -202,16 +202,23 @@ class GameViewModel: ObservableObject {
 
         showRetryOption = false
 
-        speechService.speakFeedback("The correct spelling is")
-        Task {
-            try? await Task.sleep(nanoseconds: 1_500_000_000)
-            await MainActor.run {
-                self.speechService.spellWord(word.text)
-            }
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
-            await MainActor.run {
-                self.session?.markIncorrect()
-                self.advanceToNextWord()
+        // First, wait for feedback to complete
+        speechService.speakFeedback("The correct spelling is") {
+            // Then start spelling after feedback finishes
+            Task {
+                try? await Task.sleep(nanoseconds: 500_000_000)  // Short pause between feedback and spelling
+                await MainActor.run {
+                    self.speechService.spellWord(word.text, difficulty: word.difficulty) {
+                        // Wait for spelling to complete before advancing
+                        Task {
+                            try? await Task.sleep(nanoseconds: 500_000_000)  // Short pause after spelling
+                            await MainActor.run {
+                                self.session?.markIncorrect()
+                                self.advanceToNextWord()
+                            }
+                        }
+                    }
+                }
             }
         }
     }

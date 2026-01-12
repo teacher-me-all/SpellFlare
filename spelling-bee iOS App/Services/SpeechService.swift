@@ -49,6 +49,7 @@ class SpeechService: NSObject, ObservableObject {
     private let audioEngine = AVAudioEngine()
     private let audioService = AudioPlaybackService.shared
     private var currentDifficulty: Int = 1
+    private var speechCompletionHandler: (() -> Void)?
 
     // MARK: - Initialization
     override init() {
@@ -62,39 +63,8 @@ class SpeechService: NSObject, ObservableObject {
     // MARK: - Voice Management
 
     private func loadAvailableVoices() {
-        // Add Lisa (AI) as first option
+        // Only Lisa (AI) voice is available
         availableVoices = [VoiceOption.lisaAI]
-
-        // Then add system voices
-        let voices = AVSpeechSynthesisVoice.speechVoices()
-
-        // Only include these specific voices (kid-friendly)
-        let allowedVoices: Set<String> = [
-            "whisper", "tessa", "superstar", "shelly", "samantha",
-            "rishi", "kathy", "karen", "flo", "eddy"
-        ]
-
-        // Filter to allowed English voices and create options
-        let systemVoices = voices
-            .filter { $0.language.starts(with: "en") }
-            .filter { allowedVoices.contains($0.name.lowercased()) }
-            .map { voice in
-                let displayName = voice.name
-                return VoiceOption(id: voice.identifier, name: displayName, language: voice.language)
-            }
-            .sorted { $0.name < $1.name }
-
-        // Remove duplicates by name
-        var seen = Set<String>()
-        let filtered = systemVoices.filter { voice in
-            if seen.contains(voice.name) {
-                return false
-            }
-            seen.insert(voice.name)
-            return true
-        }
-
-        availableVoices.append(contentsOf: filtered)
     }
 
     private func loadSavedVoice() {
@@ -110,7 +80,7 @@ class SpeechService: NSObject, ObservableObject {
         previewVoiceWithWord(voice, word: nil)
     }
 
-    func previewVoiceWithWord(_ voice: VoiceOption, word: String?) {
+    func previewVoiceWithWord(_ voice: VoiceOption, word: String?, difficulty: Int? = nil) {
         stopSpeaking()
         let text = word ?? "Hello, I am \(voice.name)"
 
@@ -118,7 +88,8 @@ class SpeechService: NSObject, ObservableObject {
             audioService.setVoice("Lisa")
             isSpeaking = true
             if let word = word {
-                audioService.playWord(word, difficulty: currentDifficulty) {
+                let wordDifficulty = difficulty ?? currentDifficulty
+                audioService.playWord(word, difficulty: wordDifficulty) {
                     self.isSpeaking = false
                 }
             } else {
@@ -165,8 +136,11 @@ class SpeechService: NSObject, ObservableObject {
         return AVSpeechSynthesisVoice(language: "en-US")
     }
 
-    func speakWord(_ word: String) {
+    func speakWord(_ word: String, difficulty: Int? = nil) {
         stopSpeaking()
+
+        // Use provided difficulty or fall back to currentDifficulty
+        let wordDifficulty = difficulty ?? currentDifficulty
 
         // Check if Lisa(AI) is selected
         if selectedVoice.id == "com.spellflare.lisa-ai" {
@@ -178,7 +152,7 @@ class SpeechService: NSObject, ObservableObject {
             Task {
                 try? await Task.sleep(nanoseconds: 1_000_000_000)  // Keep 1s delay
                 await MainActor.run {
-                    audioService.playWord(word, difficulty: currentDifficulty) {
+                    audioService.playWord(word, difficulty: wordDifficulty) {
                         self.isSpeaking = false
                     }
                 }
@@ -199,14 +173,18 @@ class SpeechService: NSObject, ObservableObject {
         }
     }
 
-    func spellWord(_ word: String) {
+    func spellWord(_ word: String, difficulty: Int? = nil, completion: (() -> Void)? = nil) {
         stopSpeaking()
+
+        // Use provided difficulty or fall back to currentDifficulty
+        let wordDifficulty = difficulty ?? currentDifficulty
 
         if selectedVoice.id == "com.spellflare.lisa-ai" {
             audioService.setVoice("Lisa")
             isSpeaking = true
-            audioService.playSpelling(word, difficulty: currentDifficulty) {
+            audioService.playSpelling(word, difficulty: wordDifficulty) {
                 self.isSpeaking = false
+                completion?()
             }
         } else {
             // Existing AVSpeechSynthesizer code
@@ -216,12 +194,14 @@ class SpeechService: NSObject, ObservableObject {
             utterance.pitchMultiplier = 1.0
             utterance.voice = getSelectedAVVoice()
 
+            // Store completion handler for delegate to call
+            speechCompletionHandler = completion
             isSpeaking = true
             synthesizer.speak(utterance)
         }
     }
 
-    func speakFeedback(_ message: String) {
+    func speakFeedback(_ message: String, completion: (() -> Void)? = nil) {
         stopSpeaking()
 
         if selectedVoice.id == "com.spellflare.lisa-ai" {
@@ -229,6 +209,7 @@ class SpeechService: NSObject, ObservableObject {
             isSpeaking = true
             audioService.playFeedback(message) {
                 self.isSpeaking = false
+                completion?()
             }
         } else {
             // Existing AVSpeechSynthesizer code
@@ -237,6 +218,8 @@ class SpeechService: NSObject, ObservableObject {
             utterance.pitchMultiplier = 1.1
             utterance.voice = getSelectedAVVoice()
 
+            // Store completion handler for delegate to call
+            speechCompletionHandler = completion
             isSpeaking = true
             synthesizer.speak(utterance)
         }
@@ -248,6 +231,7 @@ class SpeechService: NSObject, ObservableObject {
         }
         audioService.stop()  // Also stop audio playback
         isSpeaking = false
+        speechCompletionHandler = nil  // Clear any pending completion
     }
 
     // MARK: - Speech Recognition
@@ -418,6 +402,8 @@ extension SpeechService: AVSpeechSynthesizerDelegate {
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         Task { @MainActor in
             self.isSpeaking = false
+            self.speechCompletionHandler?()
+            self.speechCompletionHandler = nil
         }
     }
 }

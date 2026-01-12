@@ -66,7 +66,7 @@ struct GameView: View {
             }
         }
         .sheet(isPresented: $showVoicePicker) {
-            GameVoicePickerSheet(currentWord: viewModel.currentWord?.text)
+            GameVoicePickerSheet(currentWord: viewModel.currentWord?.text, currentWordDifficulty: viewModel.currentWord?.difficulty)
         }
         .fullScreenCover(isPresented: $viewModel.showPreTestAd) {
             PreTestAdView(level: level) {
@@ -89,6 +89,7 @@ struct GameVoicePickerSheet: View {
     @ObservedObject var speechService = SpeechService.shared
     @Environment(\.dismiss) var dismiss
     let currentWord: String?
+    let currentWordDifficulty: Int?
 
     var body: some View {
         NavigationStack {
@@ -96,7 +97,7 @@ struct GameVoicePickerSheet: View {
                 ForEach(speechService.availableVoices) { voice in
                     Button {
                         speechService.selectedVoice = voice
-                        speechService.previewVoiceWithWord(voice, word: currentWord)
+                        speechService.previewVoiceWithWord(voice, word: currentWord, difficulty: currentWordDifficulty)
                     } label: {
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
@@ -116,7 +117,7 @@ struct GameVoicePickerSheet: View {
                             }
 
                             Button {
-                                speechService.previewVoiceWithWord(voice, word: currentWord)
+                                speechService.previewVoiceWithWord(voice, word: currentWord, difficulty: currentWordDifficulty)
                             } label: {
                                 Image(systemName: "play.circle.fill")
                                     .font(.title2)
@@ -142,6 +143,7 @@ struct GameVoicePickerSheet: View {
 struct GameHeader: View {
     let level: Int
     @ObservedObject var viewModel: GameViewModel
+    @ObservedObject var speechService = SpeechService.shared
     @Binding var showVoicePicker: Bool
     let onExit: () -> Void
 
@@ -214,7 +216,7 @@ struct GameHeader: View {
                     HStack(spacing: 6) {
                         Image(systemName: "speaker.wave.2.fill")
                             .font(.system(size: 14))
-                        Text(SpeechService.shared.selectedVoice.name)
+                        Text(speechService.selectedVoice.name)
                             .font(.system(size: 14, weight: .medium))
                         Image(systemName: "chevron.down")
                             .font(.system(size: 10))
