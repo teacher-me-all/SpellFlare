@@ -28,19 +28,29 @@ class AdManager: NSObject, ObservableObject {
 
     // MARK: - Ad Configuration
 
-    // Test ad unit ID for development (MUST use this during development)
-    private let testAdUnitID = "ca-app-pub-3940256099942544/4411468910"
+    // Test ad unit IDs for development (MUST use these during development)
+    private let testAdUnitID = "ca-app-pub-3940256099942544/4411468910"  // Interstitial
+    private let testBannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"  // Banner
 
-    // Production ad unit ID (to be replaced when app is approved)
-    // TODO: Replace with real ad unit ID from AdMob console after app approval
+    // Production ad unit IDs (to be replaced when app is approved)
+    // TODO: Replace with real ad unit IDs from AdMob console after app approval
     private let productionAdUnitID = "ca-app-pub-3940256099942544/4411468910"  // Using test ID for now
+    private let productionBannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"  // Using test ID for now
 
-    // Current ad unit ID (switches based on build configuration)
+    // Current ad unit IDs (switches based on build configuration)
     private var currentAdUnitID: String {
         #if DEBUG
         return testAdUnitID
         #else
         return productionAdUnitID
+        #endif
+    }
+
+    var currentBannerAdUnitID: String {
+        #if DEBUG
+        return testBannerAdUnitID
+        #else
+        return productionBannerAdUnitID
         #endif
     }
 
@@ -68,6 +78,19 @@ class AdManager: NSObject, ObservableObject {
         }
 
         print("📱 Initializing Google Mobile Ads SDK with App ID: \(appID)")
+
+        // CRITICAL: Configure SDK for child-directed treatment
+        // This must be set BEFORE starting the SDK
+        let requestConfiguration = GADMobileAds.sharedInstance().requestConfiguration
+
+        // Set tag for child directed treatment
+        requestConfiguration.tag(forChildDirectedTreatment: true)
+
+        // Set maximum ad content rating to G (General Audiences)
+        requestConfiguration.maxAdContentRating = .general
+
+        print("🔒 SDK configured for child-directed treatment (COPPA compliant)")
+        print("🔒 Maximum ad content rating: G (General Audiences)")
 
         // Configure for test devices
         #if DEBUG
@@ -114,12 +137,8 @@ class AdManager: NSObject, ObservableObject {
 
         print("🔄 Loading interstitial ad...")
 
-        // Create ad request
-        let request = GADRequest()
-
-        // COPPA compliance: Mark as child-directed treatment
-        // This disables personalized ads automatically
-        request.requestAgent = "kids_app"
+        // Create COPPA-compliant ad request
+        let request = createChildSafeAdRequest()
 
         do {
             // Load interstitial ad
@@ -135,13 +154,37 @@ class AdManager: NSObject, ObservableObject {
             interstitialAd = ad
             isAdLoaded = true
 
-            print("✅ Interstitial ad loaded successfully")
+            print("✅ Interstitial ad loaded successfully (child-safe)")
 
         } catch {
             print("❌ Failed to load interstitial ad: \(error.localizedDescription)")
             isAdLoaded = false
             interstitialAd = nil
         }
+    }
+
+    // MARK: - Child-Safe Ad Request Configuration
+
+    /// Creates a COPPA-compliant ad request for kids apps
+    /// This ensures only age-appropriate, non-personalized ads are shown
+    private func createChildSafeAdRequest() -> GADRequest {
+        let request = GADRequest()
+
+        // CRITICAL: Tag for child-directed treatment (COPPA compliance)
+        // This tells Google AdMob to ONLY serve ads appropriate for children
+        let extras = GADExtras()
+        extras.additionalParameters = [
+            "tag_for_child_directed_treatment": "1",  // Enforce child-directed ads
+            "max_ad_content_rating": "G"              // General Audiences only
+        ]
+        request.register(extras)
+
+        // Additional safety: Mark as kids app
+        request.requestAgent = "kids_app"
+
+        print("📋 Ad request configured for child-directed treatment (COPPA compliant)")
+
+        return request
     }
 
     // MARK: - Ad Display Logic
@@ -306,5 +349,61 @@ class AdMobViewController: UIViewController {
                 onDismiss?()
             }
         }
+    }
+}
+
+// MARK: - Banner Ad View (Simple display banner for game screen)
+struct BannerAdView: View {
+    @ObservedObject var adManager = AdManager.shared
+    @ObservedObject var storeManager = StoreManager.shared
+
+    var body: some View {
+        Group {
+            if adManager.adsEnabled && !storeManager.isAdsRemoved {
+                BannerAdViewWrapper()
+                    .frame(height: 50)
+                    .background(Color.black.opacity(0.1))
+            }
+        }
+    }
+}
+
+// MARK: - UIViewRepresentable for GADBannerView
+struct BannerAdViewWrapper: UIViewRepresentable {
+
+    func makeUIView(context: Context) -> GADBannerView {
+        let banner = GADBannerView(adSize: GADAdSizeBanner)
+
+        // Configure banner
+        banner.adUnitID = AdManager.shared.currentBannerAdUnitID
+
+        // Find root view controller
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            banner.rootViewController = rootViewController
+        }
+
+        // Create child-safe COPPA-compliant request
+        let request = GADRequest()
+
+        // CRITICAL: Tag for child-directed treatment (COPPA compliance)
+        let extras = GADExtras()
+        extras.additionalParameters = [
+            "tag_for_child_directed_treatment": "1",  // Enforce child-directed ads
+            "max_ad_content_rating": "G"              // General Audiences only
+        ]
+        request.register(extras)
+        request.requestAgent = "kids_app"
+
+        // Load ad
+        banner.load(request)
+
+        print("📱 Banner ad loading (child-safe, COPPA compliant)...")
+
+        return banner
+    }
+
+    func updateUIView(_ uiView: GADBannerView, context: Context) {
+        // No updates needed
     }
 }

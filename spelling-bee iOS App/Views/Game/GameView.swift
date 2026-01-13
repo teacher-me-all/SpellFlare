@@ -28,7 +28,7 @@ struct GameView: View {
             )
             .ignoresSafeArea()
 
-            VStack {
+            VStack(spacing: 0) {
                 // Header
                 GameHeader(
                     level: level,
@@ -63,6 +63,11 @@ struct GameView: View {
                 }
 
                 Spacer()
+
+                // Banner ad at bottom
+                BannerAdView()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.black.opacity(0.05))
             }
         }
         .sheet(isPresented: $showSentencePicker) {
@@ -390,7 +395,7 @@ struct WordPresentationView: View {
 
                         if !keyboardInput.isEmpty {
                             Text(keyboardInput.uppercased())
-                                .font(.system(size: 28, weight: .bold, design: .monospaced))
+                                .font(.system(size: 23, weight: .bold, design: .monospaced))
                                 .foregroundColor(.cyan)
                                 .tracking(4)
                         }
@@ -405,7 +410,7 @@ struct WordPresentationView: View {
                                 .foregroundColor(.white.opacity(0.6))
 
                             Text(parseSpelledLetters(speechService.recognizedText).uppercased())
-                                .font(.system(size: 28, weight: .bold, design: .monospaced))
+                                .font(.system(size: 23, weight: .bold, design: .monospaced))
                                 .foregroundColor(.cyan)
                                 .tracking(4)
                                 .padding()
@@ -437,7 +442,7 @@ struct WordPresentationView: View {
                         HStack(spacing: 4) {
                             ForEach(Array(viewModel.currentSpellingLetters.enumerated()), id: \.offset) { index, letter in
                                 Text(letter)
-                                    .font(.system(size: 36, weight: .bold, design: .monospaced))
+                                    .font(.system(size: 31, weight: .bold, design: .monospaced))
                                     .foregroundColor(.cyan)
                                     .scaleEffect(index <= viewModel.animatedLetterIndex ? 1.0 : 0.5)
                                     .opacity(index <= viewModel.animatedLetterIndex ? 1.0 : 0.3)
@@ -451,9 +456,10 @@ struct WordPresentationView: View {
                     }
                 }
             }
-            .frame(minHeight: 150)  // Fixed minimum height to prevent layout shift
+            .frame(minHeight: 100)  // Reduced minimum height
 
             Spacer()
+                .frame(maxHeight: 20)  // Limited spacer height to move buttons up
 
             VStack(spacing: 16) {
                 // Two-button layout: Repeat + Give Up
@@ -525,6 +531,7 @@ struct WordPresentationView: View {
                 }
             }
             .padding(.horizontal, 40)
+            .padding(.bottom, 60)  // Add space for ad banner at bottom
         }
         .onAppear {
             speechService.recognizedText = ""
