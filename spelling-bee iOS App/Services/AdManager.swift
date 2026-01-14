@@ -84,7 +84,7 @@ class AdManager: NSObject, ObservableObject {
         let requestConfiguration = GADMobileAds.sharedInstance().requestConfiguration
 
         // Set tag for child directed treatment
-        requestConfiguration.tag(forChildDirectedTreatment: true)
+        requestConfiguration.tagForChildDirectedTreatment = true
 
         // Set maximum ad content rating to G (General Audiences)
         requestConfiguration.maxAdContentRating = .general
