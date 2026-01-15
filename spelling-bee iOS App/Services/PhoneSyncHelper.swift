@@ -108,6 +108,21 @@ class PhoneSyncHelper: NSObject, ObservableObject {
             sendProfileToWatch(local)
         }
     }
+
+    /// Send grade change notification to Watch
+    func notifyGradeChanged(_ profile: SyncableProfile) {
+        guard session.isReachable else { return }
+
+        guard let data = try? JSONEncoder().encode(profile) else { return }
+
+        session.sendMessage(
+            ["type": "gradeChanged", "profile": data],
+            replyHandler: nil,
+            errorHandler: { error in
+                print("Failed to notify Watch of grade change: \(error)")
+            }
+        )
+    }
 }
 
 // MARK: - WCSessionDelegate
@@ -148,42 +163,81 @@ extension PhoneSyncHelper: WCSessionDelegate {
 
     @MainActor
     private func handleReceivedMessage(_ message: [String: Any], replyHandler: (([String: Any]) -> Void)? = nil) {
-        if let action = message["action"] as? String {
-            switch action {
-            case "requestSync":
-                // Watch is requesting our profile
-                if let local = localCache.loadSyncableProfile(),
-                   let data = try? JSONEncoder().encode(local) {
-                    replyHandler?(["profile": data])
-                } else {
-                    replyHandler?(["noProfile": true])
-                }
+        // Support both "action" (legacy) and "type" (new Watch app) keys
+        let messageType = (message["action"] as? String) ?? (message["type"] as? String)
 
-            case "updateProfile":
-                // Watch pushed an updated profile
-                if let profileData = message["profile"] as? Data,
-                   let remoteProfile = try? JSONDecoder().decode(SyncableProfile.self, from: profileData) {
+        guard let type = messageType else {
+            print("Unknown message format: \(message)")
+            return
+        }
 
-                    if let local = localCache.loadSyncableProfile() {
-                        let merged = SyncableProfile.merge(local: local, remote: remoteProfile)
-                        localCache.saveSyncableProfile(merged)
-                    } else {
-                        localCache.saveSyncableProfile(remoteProfile)
-                    }
-                }
-
-            case "requestProfile":
-                // Watch is asking for our profile
-                if let local = localCache.loadSyncableProfile(),
-                   let data = try? JSONEncoder().encode(local) {
-                    replyHandler?(["profile": data])
-                } else {
-                    replyHandler?(["noProfile": true])
-                }
-
-            default:
-                break
+        switch type {
+        case "requestSync", "requestProfile":
+            // Watch is requesting our profile
+            if let local = localCache.loadSyncableProfile(),
+               let data = try? JSONEncoder().encode(local) {
+                replyHandler?(["profile": data])
+                print("Sent profile to Watch: \(local.profile.name)")
+            } else {
+                replyHandler?(["noProfile": true])
+                print("No profile to send to Watch")
             }
+
+        case "updateProfile", "profileUpdated":
+            // Watch pushed an updated profile
+            if let profileData = message["profile"] as? Data,
+               let remoteProfile = try? JSONDecoder().decode(SyncableProfile.self, from: profileData) {
+
+                if let local = localCache.loadSyncableProfile() {
+                    let merged = SyncableProfile.merge(local: local, remote: remoteProfile)
+                    localCache.saveSyncableProfile(merged)
+                    print("Merged profile from Watch: \(merged.profile.name)")
+
+                    // Notify observers that profile changed
+                    NotificationCenter.default.post(
+                        name: .profileUpdatedFromWatch,
+                        object: nil,
+                        userInfo: ["profile": merged.profile]
+                    )
+                } else {
+                    localCache.saveSyncableProfile(remoteProfile)
+                    print("Saved new profile from Watch: \(remoteProfile.profile.name)")
+                }
+            }
+
+        case "levelCompleted":
+            // Watch completed a level - update local profile
+            if let profileData = message["profile"] as? Data,
+               let remoteProfile = try? JSONDecoder().decode(SyncableProfile.self, from: profileData) {
+
+                if let local = localCache.loadSyncableProfile() {
+                    let merged = SyncableProfile.merge(local: local, remote: remoteProfile)
+                    localCache.saveSyncableProfile(merged)
+                    print("Level completion from Watch: \(merged.profile.name)")
+
+                    // Notify observers that progress changed
+                    NotificationCenter.default.post(
+                        name: .profileUpdatedFromWatch,
+                        object: nil,
+                        userInfo: ["profile": merged.profile]
+                    )
+                } else {
+                    localCache.saveSyncableProfile(remoteProfile)
+                }
+            }
+
+        case "gradeChanged":
+            // Grade changed on iPhone - this is handled by sendProfileToWatch
+            // Nothing to do here as this is an outgoing message type
+            break
+
+        default:
+            print("Unhandled message type: \(type)")
         }
     }
+}
+
+// MARK: - Notification Names
+extension Notification.Name {
+    static let profileUpdatedFromWatch = Notification.Name("profileUpdatedFromWatch")
 }
