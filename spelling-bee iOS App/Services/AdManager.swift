@@ -98,24 +98,36 @@ class AdManager: NSObject, ObservableObject {
         print("📱 AdMob configured for test mode (simulator)")
         #endif
 
-        // Start Google Mobile Ads SDK with error handling
-        do {
-            GADMobileAds.sharedInstance().start { [weak self] status in
-                Task { @MainActor in
-                    self?.isInitialized = true
-                    print("✅ Google Mobile Ads SDK initialized successfully")
-                    print("📊 Adapter statuses:")
-                    for (adapter, adapterStatus) in status.adapterStatusesByClassName {
-                        print("  - \(adapter): \(adapterStatus.state.rawValue)")
-                    }
+        // Start Google Mobile Ads SDK
+        // NOTE: Do NOT initialize AppLovin separately - AdMob handles this automatically
+        GADMobileAds.sharedInstance().start { [weak self] status in
+            Task { @MainActor in
+                self?.isInitialized = true
+                print("✅ Google Mobile Ads SDK initialized successfully")
+                print("📊 Mediation adapter statuses:")
 
-                    // Preload first ad after initialization
-                    await self?.loadAd()
+                var appLovinDetected = false
+                for (adapter, adapterStatus) in status.adapterStatusesByClassName {
+                    let stateDescription = adapterStatus.state == .ready ? "✅ Ready" : "⏳ Not Ready"
+                    print("  - \(adapter): \(stateDescription)")
+
+                    // Check if AppLovin adapter is loaded
+                    if adapter.lowercased().contains("applovin") {
+                        appLovinDetected = true
+                        print("    🎮 AppLovin mediation adapter detected!")
+                    }
                 }
+
+                if appLovinDetected {
+                    print("✅ AppLovin mediation is configured and ready")
+                    print("   AppLovin will fill ads when Google AdMob has no inventory")
+                } else {
+                    print("ℹ️ AppLovin adapter not detected - ensure AdMob console is configured")
+                }
+
+                // Preload first ad after initialization
+                await self?.loadAd()
             }
-        } catch {
-            print("❌ Failed to initialize Google Mobile Ads SDK: \(error)")
-            isInitialized = false
         }
     }
 
@@ -156,6 +168,10 @@ class AdManager: NSObject, ObservableObject {
 
             print("✅ Interstitial ad loaded successfully (child-safe)")
 
+            // MARK: - Mediation Verification Logging
+            // Log which ad network served the ad (for verifying AppLovin mediation)
+            logMediationInfo(for: ad)
+
         } catch {
             print("❌ Failed to load interstitial ad: \(error.localizedDescription)")
             isAdLoaded = false
@@ -185,6 +201,49 @@ class AdManager: NSObject, ObservableObject {
         print("📋 Ad request configured for child-directed treatment (COPPA compliant)")
 
         return request
+    }
+
+    // MARK: - Mediation Verification
+
+    /// Logs which ad network served the ad (for verifying mediation is working)
+    /// When AppLovin fills, you'll see: com.google.ads.mediation.applovin
+    private func logMediationInfo(for ad: GADInterstitialAd) {
+        let responseInfo = ad.responseInfo
+
+        // Log the winning ad network
+        if let loadedAdNetworkInfo = responseInfo.loadedAdNetworkResponseInfo {
+            let adNetworkClassName = loadedAdNetworkInfo.adNetworkClassName
+            print("🏆 Ad served by: \(adNetworkClassName)")
+
+            // Check if AppLovin served the ad
+            if adNetworkClassName.contains("applovin") {
+                print("📱 AppLovin mediation fill - Google AdMob had no inventory")
+            } else if adNetworkClassName.contains("GADMediationAdapter") ||
+                      adNetworkClassName.contains("google") {
+                print("📱 Google AdMob fill - primary network served the ad")
+            }
+
+            // Log latency for performance monitoring
+            let latency = loadedAdNetworkInfo.latency
+            print("⏱️ Ad load latency: \(String(format: "%.2f", latency))s")
+        }
+
+        // Log the full waterfall for debugging (shows all networks tried)
+        print("📊 Mediation waterfall:")
+        for (index, adNetworkInfo) in responseInfo.adNetworkInfoArray.enumerated() {
+            let networkName = adNetworkInfo.adNetworkClassName
+            let errorDescription = adNetworkInfo.error?.localizedDescription ?? "No error"
+            let latency = adNetworkInfo.latency
+
+            if adNetworkInfo.error != nil {
+                print("  \(index + 1). \(networkName) - ❌ No fill (\(errorDescription))")
+            } else {
+                print("  \(index + 1). \(networkName) - ✅ Filled in \(String(format: "%.2f", latency))s")
+            }
+        }
+
+        // Log mediation adapter info from SDK initialization
+        print("📋 Response ID: \(responseInfo.responseIdentifier ?? "N/A")")
     }
 
     // MARK: - Ad Display Logic

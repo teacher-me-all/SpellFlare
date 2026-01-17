@@ -12,6 +12,10 @@ target 'spelling-bee iOS App' do
   # Google Mobile Ads SDK (includes UserMessagingPlatform)
   pod 'Google-Mobile-Ads-SDK', '~> 11.0'
 
+  # AppLovin mediation adapter for AdMob
+  # NOTE: Do NOT initialize AppLovin manually - AdMob handles this automatically
+  pod 'GoogleMobileAdsMediationAppLovin'
+
   # Post-install hook to fix compatibility issues
   post_install do |installer|
     installer.pods_project.targets.each do |target|

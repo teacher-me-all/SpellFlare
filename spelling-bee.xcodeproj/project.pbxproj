@@ -48,7 +48,7 @@
 		A64A911AF36D048A7723B3C9 /* WatchSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B059DC2F6A8D40BC0D069 /* WatchSpeechService.swift */; };
 		AA94098439FC05E72D988ECA /* WatchGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738560D4D15E3890863E1C3 /* WatchGameView.swift */; };
 		AE98083BDD798CDB67DD227B /* WatchSyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48959F168D4811792C017D /* WatchSyncHelper.swift */; };
-		B66F95FC3EAC45E1BFA1E7E4 /* Resources/Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Resources/Audio */; };
+		B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Audio */; };
 		B837E42A87BCC93824D7142E /* LocalCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF032EFD0003009167B7 /* LocalCacheService.swift */; };
 		C3C2B184F2E8649E08D57024 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = 9670037D8EBFE05D21B88B8B /* Audio */; };
 		D46598A37DF16AC815B4F68B /* WatchGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7076FE5E396EB00641C227 /* WatchGameViewModel.swift */; };
@@ -146,7 +146,7 @@
 		9670037D8EBFE05D21B88B8B /* Audio */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = Audio; sourceTree = "<group>"; };
 		A76E914314266D7F94B9E0EB /* Pods_spelling_bee_iOS_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spelling_bee_iOS_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF6BE9604A3218453139B52 /* SpellFlare Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SpellFlare Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF32531B97AF4BADAD29C8A7 /* Resources/Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
+		CF32531B97AF4BADAD29C8A7 /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
 		D278C0DEE0547EE5CAE5ABFD /* WatchHomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchHomeView.swift; sourceTree = "<group>"; };
 		DF7076FE5E396EB00641C227 /* WatchGameViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchGameViewModel.swift; sourceTree = "<group>"; };
 		E2C1F1867E7E50C292183A2D /* SpellFlare-Watch.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = "SpellFlare-Watch.entitlements"; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 				53B2CC232EFA6013009167B7 /* ViewModels */,
 				53B2CC242EFA6014009167B7 /* Views */,
 				53B2CC612EFA7001009167B7 /* Assets.xcassets */,
-				CF32531B97AF4BADAD29C8A7 /* Resources/Audio */,
+				CF32531B97AF4BADAD29C8A7 /* Audio */,
 			);
 			path = "spelling-bee iOS App";
 			sourceTree = "<group>";
@@ -460,6 +460,7 @@
 				53B2CC302EFA6020009167B7 /* Frameworks */,
 				53B2CC322EFA6022009167B7 /* Resources */,
 				BAED1708D7F649D1B0C6FCBC /* [CP] Copy Pods Resources */,
+				37074CC22B9F6B08CB588568 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -586,7 +587,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */,
-				B66F95FC3EAC45E1BFA1E7E4 /* Resources/Audio in Resources */,
+				B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +617,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		37074CC22B9F6B08CB588568 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		55866E791B5D6AA3A1A865FE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -646,13 +664,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -916,6 +930,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "spelling-bee iOS App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SpellFlare;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -926,7 +941,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.01;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -949,6 +964,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "spelling-bee iOS App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = SpellFlare;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -959,7 +975,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.01;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1051,7 +1067,6 @@
 		91C57260D3D3496757EE7AB9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SpellFlare Watch App/SpellFlare-Watch.entitlements";
@@ -1068,7 +1083,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1083,7 +1098,6 @@
 		CCA6D1B03395C0FEE3C4632D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SpellFlare Watch App/SpellFlare-Watch.entitlements";
@@ -1100,7 +1114,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
