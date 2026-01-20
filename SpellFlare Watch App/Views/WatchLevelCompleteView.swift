@@ -13,6 +13,7 @@ struct WatchLevelCompleteView: View {
 
     let level: Int
     let score: Int
+    let coinsEarned: Int
 
     @State private var showConfetti = false
 
@@ -56,6 +57,9 @@ struct WatchLevelCompleteView: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
 
+            // Coins earned
+            WatchCoinsEarnedView(amount: coinsEarned)
+
             Spacer()
                 .frame(height: 8)
 
@@ -90,6 +94,18 @@ struct WatchLevelCompleteView: View {
             }
         }
         .padding()
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.4, green: 0.2, blue: 0.9),
+                    Color(red: 0.3, green: 0.15, blue: 0.7)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             // Play success haptic
             WKInterfaceDevice.current().play(.success)
@@ -106,6 +122,6 @@ struct WatchLevelCompleteView: View {
 }
 
 #Preview {
-    WatchLevelCompleteView(level: 5, score: 8)
+    WatchLevelCompleteView(level: 5, score: 8, coinsEarned: 100)
         .environmentObject(WatchAppState())
 }

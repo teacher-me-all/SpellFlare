@@ -76,9 +76,12 @@ class WatchGameViewModel: ObservableObject {
     @Published var feedbackType: WatchFeedbackType?
     @Published var userSpelling = ""
     @Published var retryCount = 0
+    @Published var lastAnsweredWord: WatchWord?  // Store word for feedback display
+
+    // MARK: - Coins Tracking
+    @Published var levelWrongAttempts: Int = 0  // Total wrong attempts for coins calculation
 
     // MARK: - Services
-    private let speechService = WatchSpeechService.shared
     private let audioService = WatchAudioService.shared
     private let wordBank = WatchWordBankService.shared
 
@@ -99,10 +102,18 @@ class WatchGameViewModel: ObservableObject {
         session?.isComplete ?? false
     }
 
+    /// Coins earned for this level based on wrong attempts
+    var coinsEarned: Int {
+        CoinsService.shared.calculateCoins(wrongAttempts: levelWrongAttempts)
+    }
+
     // MARK: - Game Flow
     func startLevel(level: Int, grade: Int) {
         let words = wordBank.getWords(grade: grade, level: level, count: 15)
         session = WatchGameSession(level: level, grade: grade, words: words)
+
+        // Reset coins tracking
+        levelWrongAttempts = 0
 
         phase = .presenting
         presentCurrentWord()
@@ -116,7 +127,6 @@ class WatchGameViewModel: ObservableObject {
 
         retryCount = 0
         phase = .presenting
-        speechService.setCurrentWord(word.text)
 
         // Play word audio
         audioService.playWord(word.text, difficulty: word.difficulty)
@@ -130,11 +140,9 @@ class WatchGameViewModel: ObservableObject {
     func startSpelling() {
         phase = .spelling
         userSpelling = ""
-        speechService.startListening()
     }
 
     func submitSpelling(_ spelling: String) {
-        speechService.stopListening()
         userSpelling = spelling
 
         guard let word = currentWord else { return }
@@ -161,6 +169,8 @@ class WatchGameViewModel: ObservableObject {
     }
 
     private func handleCorrectAnswer() {
+        // Store the word before advancing index
+        lastAnsweredWord = currentWord
         session?.markCorrect()
         feedbackType = .correct
         phase = .feedback
@@ -177,9 +187,12 @@ class WatchGameViewModel: ObservableObject {
     }
 
     private func handleIncorrectAnswer() {
+        // Store the word for display
+        lastAnsweredWord = currentWord
         feedbackType = .incorrect
         phase = .feedback
         retryCount += 1
+        levelWrongAttempts += 1  // Track for coins
 
         audioService.playFeedback(.incorrect)
     }
@@ -187,6 +200,7 @@ class WatchGameViewModel: ObservableObject {
     func retry() {
         feedbackType = nil
         userSpelling = ""
+        lastAnsweredWord = nil
         phase = .presenting
         presentCurrentWord()
     }
@@ -199,6 +213,7 @@ class WatchGameViewModel: ObservableObject {
     private func advanceToNextWord() {
         feedbackType = nil
         userSpelling = ""
+        lastAnsweredWord = nil
 
         if isLevelComplete {
             phase = .feedback  // Will trigger level complete screen
@@ -215,7 +230,6 @@ class WatchGameViewModel: ObservableObject {
     }
 
     func cleanup() {
-        speechService.stopListening()
         audioService.stop()
     }
 

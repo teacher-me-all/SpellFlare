@@ -13,7 +13,8 @@ struct SettingsView: View {
     @ObservedObject var storeManager = StoreManager.shared
     @State private var selectedGrade: Int = 1
     @State private var showResetConfirm = false
-    @State private var showParentGate = false
+    @State private var showParentGateForAds = false
+    @State private var showParentGateForWatch = false
     @State private var showRestoreAlert = false
     @State private var restoreMessage = ""
     @State private var showPurchaseResult = false
@@ -94,6 +95,7 @@ struct SettingsView: View {
 
                 // Purchases Section
                 Section {
+                    // Remove Ads
                     if storeManager.isAdsRemoved {
                         HStack {
                             Label("Ads Removed", systemImage: "checkmark.seal.fill")
@@ -105,16 +107,45 @@ struct SettingsView: View {
                         }
                     } else {
                         Button {
-                            showParentGate = true
+                            showParentGateForAds = true
                         } label: {
                             HStack {
-                                Label("Remove Ads", systemImage: "cart.fill")
+                                Label("Remove Ads", systemImage: "speaker.slash.fill")
                                 Spacer()
                                 if storeManager.purchaseInProgress {
                                     ProgressView()
                                         .scaleEffect(0.8)
                                 } else {
-                                    Text(storeManager.formattedPrice)
+                                    Text(storeManager.formattedRemoveAdsPrice)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .disabled(storeManager.purchaseInProgress)
+                    }
+
+                    // Unlock Watch Levels
+                    if storeManager.isWatchUnlocked {
+                        HStack {
+                            Label("Watch Unlocked", systemImage: "applewatch")
+                                .foregroundColor(.green)
+                            Spacer()
+                            Text("Purchased")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        Button {
+                            showParentGateForWatch = true
+                        } label: {
+                            HStack {
+                                Label("Unlock Watch Levels", systemImage: "applewatch")
+                                Spacer()
+                                if storeManager.purchaseInProgress {
+                                    ProgressView()
+                                        .scaleEffect(0.8)
+                                } else {
+                                    Text(storeManager.formattedUnlockWatchPrice)
                                         .foregroundColor(.secondary)
                                 }
                             }
@@ -134,7 +165,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Purchases")
                 } footer: {
-                    Text("Remove ads to enjoy an uninterrupted spelling experience.")
+                    Text("Remove Ads removes ads on iPhone. Unlock Watch unlocks levels 6-50 on Apple Watch.")
                 }
 
                 // Danger Zone
@@ -173,13 +204,27 @@ struct SettingsView: View {
             } message: {
                 Text(restoreMessage)
             }
-            .sheet(isPresented: $showParentGate) {
+            .sheet(isPresented: $showParentGateForAds) {
                 ParentGateView {
-                    // Parent verified, proceed with purchase
+                    // Parent verified, proceed with Remove Ads purchase
                     Task {
                         let success = await storeManager.purchaseRemoveAds()
                         if success {
                             purchaseResultMessage = "Ads removed successfully! Enjoy ad-free spelling practice."
+                        } else {
+                            purchaseResultMessage = storeManager.purchaseError ?? "Purchase failed. Please try again."
+                        }
+                        showPurchaseResult = true
+                    }
+                }
+            }
+            .sheet(isPresented: $showParentGateForWatch) {
+                ParentGateView {
+                    // Parent verified, proceed with Unlock Watch purchase
+                    Task {
+                        let success = await storeManager.purchaseUnlockWatch()
+                        if success {
+                            purchaseResultMessage = "Watch levels unlocked! Levels 6-50 are now available on Apple Watch."
                         } else {
                             purchaseResultMessage = storeManager.purchaseError ?? "Purchase failed. Please try again."
                         }

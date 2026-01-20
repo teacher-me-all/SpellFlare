@@ -2,7 +2,7 @@
 //  WatchAudioService.swift
 //  SpellFlare Watch App
 //
-//  Audio playback service for watchOS using AVAudioPlayer.
+//  Audio playback service for watchOS using AVAudioPlayer with TTS fallback.
 //
 
 import Foundation
@@ -47,6 +47,7 @@ class WatchAudioService: ObservableObject {
 
     private var player: AVAudioPlayer?
     private var completionHandler: (() -> Void)?
+    private let synthesizer = AVSpeechSynthesizer()
 
     // MARK: - Initialization
     init() {
@@ -66,44 +67,55 @@ class WatchAudioService: ObservableObject {
     // MARK: - Word Playback
     func playWord(_ word: String, difficulty: Int, completion: (() -> Void)? = nil) {
         let path = "Audio/Lisa/words/difficulty_\(difficulty)/\(word.lowercased())"
-        play(path: path, completion: completion)
+        play(path: path, fallbackText: word, completion: completion)
     }
 
     // MARK: - Spelling Playback
     func playSpelling(_ word: String, difficulty: Int, completion: (() -> Void)? = nil) {
         let path = "Audio/Lisa/spelling/difficulty_\(difficulty)/\(word.lowercased())_spelled"
-        play(path: path, completion: completion)
+        // Spell out the word letter by letter for TTS fallback
+        let spelled = word.map { String($0) }.joined(separator: ", ")
+        play(path: path, fallbackText: spelled, completion: completion)
     }
 
     // MARK: - Letter Playback
     func playLetter(_ letter: String, completion: (() -> Void)? = nil) {
-        let path = "Audio/Lisa/letters/\(letter.lowercased())"
-        play(path: path, completion: completion)
+        // Watch app has letters at Audio/letters/ (no Lisa subdirectory)
+        let path = "Audio/letters/\(letter.lowercased())"
+        play(path: path, fallbackText: letter, completion: completion)
     }
 
     // MARK: - Sentence Playback
     func playSentence(_ word: String, difficulty: Int, number: Int, completion: (() -> Void)? = nil) {
         let path = "Audio/Lisa/sentences/difficulty_\(difficulty)/\(word.lowercased())_sentence\(number)"
-        play(path: path, completion: completion)
+        play(path: path, fallbackText: nil, completion: completion)
     }
 
     // MARK: - Feedback Playback
     func playFeedback(_ type: WatchFeedbackAudioType, completion: (() -> Void)? = nil) {
         let file = type.randomFile
-        let path = "Audio/Lisa/feedback/\(type.folder)/\(file)"
-        play(path: path, completion: completion)
+        // Watch app has feedback at Audio/feedback/ (no Lisa subdirectory)
+        let path = "Audio/feedback/\(type.folder)/\(file)"
+        // Generate TTS fallback text from file name
+        let fallback = file.replacingOccurrences(of: "_", with: " ")
+        play(path: path, fallbackText: fallback, completion: completion)
     }
 
     // MARK: - Core Playback
-    private func play(path: String, completion: (() -> Void)?) {
+    private func play(path: String, fallbackText: String? = nil, completion: (() -> Void)?) {
         stop()
 
         // Try .wav first, then .mp3
         guard let url = findAudioFile(path: path) else {
-            print("Audio not found: \(path)")
-            // Play haptic feedback as fallback
-            WKInterfaceDevice.current().play(.notification)
-            completion?()
+            print("Audio not found: \(path), using TTS fallback")
+            // Use TTS as fallback if we have text
+            if let text = fallbackText {
+                speakWithTTS(text: text, completion: completion)
+            } else {
+                // No fallback text, just play haptic
+                WKInterfaceDevice.current().play(.notification)
+                completion?()
+            }
             return
         }
 
@@ -130,8 +142,40 @@ class WatchAudioService: ObservableObject {
 
         } catch {
             print("Playback error: \(error)")
-            WKInterfaceDevice.current().play(.notification)
-            completion?()
+            // Try TTS fallback on error
+            if let text = fallbackText {
+                speakWithTTS(text: text, completion: completion)
+            } else {
+                WKInterfaceDevice.current().play(.notification)
+                completion?()
+            }
+        }
+    }
+
+    // MARK: - Text-to-Speech Fallback
+    private func speakWithTTS(text: String, completion: (() -> Void)?) {
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default)
+            try session.setActive(true)
+        } catch {
+            print("TTS audio session error: \(error)")
+        }
+
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
+        utterance.pitchMultiplier = 1.0
+
+        completionHandler = completion
+        isPlaying = true
+
+        synthesizer.speak(utterance)
+
+        // Estimate duration and schedule completion
+        let estimatedDuration = Double(text.count) * 0.08 + 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + estimatedDuration) { [weak self] in
+            self?.handlePlaybackComplete()
         }
     }
 
@@ -162,6 +206,7 @@ class WatchAudioService: ObservableObject {
     func stop() {
         player?.stop()
         player = nil
+        synthesizer.stopSpeaking(at: .immediate)
         isPlaying = false
         completionHandler = nil
     }

@@ -53,12 +53,19 @@ struct HomeView: View {
                 // Levels List
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        Text("Levels")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 20)
-                            .padding(.top, 20)
+                        HStack {
+                            Text("Levels")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+
+                            Spacer()
+
+                            Text("🐝")
+                                .font(.title2)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 20)
 
                         LevelListView(
                             levelGroup: selectedLevelGroup,
@@ -67,6 +74,9 @@ struct HomeView: View {
                     }
                     .padding(.bottom, 30)
                 }
+
+                // Banner Ad at bottom (only if ads not removed)
+                BannerAdView()
             }
         }
         .sheet(isPresented: $showGradePicker) {
@@ -154,8 +164,8 @@ struct TopHeaderView: View {
 
                 Spacer()
 
-                Text("🐝")
-                    .font(.system(size: 50))
+                // Coins display
+                CoinsDisplayView(coins: profile?.totalCoins ?? 0)
             }
             .padding(.horizontal, 20)
         }

@@ -102,9 +102,42 @@ class PhoneSyncHelper: NSObject, ObservableObject {
         )
     }
 
+    /// Sync Watch unlock state after purchase
+    func syncWatchUnlockState() {
+        guard session.isReachable else {
+            print("Watch not reachable, cannot sync Watch unlock state")
+            return
+        }
+
+        // Get current profile and update with Watch unlock state
+        let isWatchUnlocked = StoreManager.shared.isWatchUnlocked
+        if var local = localCache.loadSyncableProfile() {
+            var updatedProfile = local
+            updatedProfile.isWatchUnlocked = isWatchUnlocked
+            updatedProfile.lastModified = Date()
+
+            // Save locally and send to Watch
+            localCache.saveSyncableProfile(updatedProfile)
+
+            guard let data = try? JSONEncoder().encode(updatedProfile) else { return }
+
+            session.sendMessage(
+                ["action": "profileUpdated", "profile": data],
+                replyHandler: nil,
+                errorHandler: { error in
+                    print("Failed to sync Watch unlock state: \(error)")
+                }
+            )
+            print("Watch unlock state synced: \(isWatchUnlocked)")
+        }
+    }
+
     /// Called after local profile changes - push to Watch
     func pushLocalChanges() {
-        if let local = localCache.loadSyncableProfile(), session.isReachable {
+        if var local = localCache.loadSyncableProfile(), session.isReachable {
+            // Always update Watch unlock state before pushing
+            local.isWatchUnlocked = StoreManager.shared.isWatchUnlocked
+            localCache.saveSyncableProfile(local)
             sendProfileToWatch(local)
         }
     }

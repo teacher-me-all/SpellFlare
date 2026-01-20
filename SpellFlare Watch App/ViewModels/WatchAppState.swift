@@ -12,8 +12,9 @@ import WatchConnectivity
 enum WatchScreen: Equatable {
     case loading
     case home
+    case settings
     case game(level: Int)
-    case levelComplete(level: Int, score: Int)
+    case levelComplete(level: Int, score: Int, coinsEarned: Int)
 }
 
 // MARK: - Watch Mode
@@ -51,11 +52,15 @@ class WatchAppState: ObservableObject {
         currentScreen = .game(level: level)
     }
 
-    func showLevelComplete(level: Int, score: Int) {
-        currentScreen = .levelComplete(level: level, score: score)
+    func showLevelComplete(level: Int, score: Int, coinsEarned: Int) {
+        currentScreen = .levelComplete(level: level, score: score, coinsEarned: coinsEarned)
     }
 
     func startNextLevel(after level: Int) {
         currentScreen = .game(level: level + 1)
+    }
+
+    func navigateToSettings() {
+        currentScreen = .settings
     }
 }

@@ -45,17 +45,24 @@
 		53BA2AFB3990417344B3D735 /* WatchWordBankService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1AAD1AED6AD2DAD296A88B /* WatchWordBankService.swift */; };
 		581C297148A514F5A93C5F3D /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D278C0DEE0547EE5CAE5ABFD /* WatchHomeView.swift */; };
 		93668A426FBBF0D8BE68B09C /* WatchLevelCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CEA0D30E0BADC4FC4EA8FB /* WatchLevelCompleteView.swift */; };
-		A64A911AF36D048A7723B3C9 /* WatchSpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B059DC2F6A8D40BC0D069 /* WatchSpeechService.swift */; };
 		AA94098439FC05E72D988ECA /* WatchGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5738560D4D15E3890863E1C3 /* WatchGameView.swift */; };
 		AE98083BDD798CDB67DD227B /* WatchSyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A48959F168D4811792C017D /* WatchSyncHelper.swift */; };
-		B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Audio */; };
+		B66F95FC3EAC45E1BFA1E7E4 /* Resources/Audio in Resources */ = {isa = PBXBuildFile; fileRef = CF32531B97AF4BADAD29C8A7 /* Resources/Audio */; };
 		B837E42A87BCC93824D7142E /* LocalCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CF032EFD0003009167B7 /* LocalCacheService.swift */; };
 		C3C2B184F2E8649E08D57024 /* Audio in Resources */ = {isa = PBXBuildFile; fileRef = 9670037D8EBFE05D21B88B8B /* Audio */; };
+		COINS001A2EFD1001009167B7 /* CoinsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS001B2EFD1001009167B7 /* CoinsService.swift */; };
+		COINS001C2EFD1001009167B7 /* CoinsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS001B2EFD1001009167B7 /* CoinsService.swift */; };
+		COINS002A2EFD1002009167B7 /* GameCenterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS002B2EFD1002009167B7 /* GameCenterService.swift */; };
+		COINS003A2EFD1003009167B7 /* CoinsDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS003B2EFD1003009167B7 /* CoinsDisplayView.swift */; };
+		COINS004A2EFD1004009167B7 /* CoinsEarnedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS004B2EFD1004009167B7 /* CoinsEarnedView.swift */; };
+		COINS005A2EFD1005009167B7 /* WatchPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS005B2EFD1005009167B7 /* WatchPaywallView.swift */; };
+		COINS006A2EFD1006009167B7 /* WatchCoinsDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = COINS006B2EFD1006009167B7 /* WatchCoinsDisplayView.swift */; };
 		D46598A37DF16AC815B4F68B /* WatchGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7076FE5E396EB00641C227 /* WatchGameViewModel.swift */; };
 		DA799CAD5B44CCE5A4B3B60F /* SpellFlareWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6593BCA60835766DBD4EC26 /* SpellFlareWatchApp.swift */; };
 		EC8324B6305A824D393668EB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F4E6D0DCCAA8B777FC1C38 /* ContentView.swift */; };
 		F889CB2D68BA5D80DE4E5D7D /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B2CC132EFA6003009167B7 /* Word.swift */; };
 		FE17E75ED6D35FA67ADAA139 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30D04AC668556D4186EA9F87 /* Assets.xcassets */; };
+		WATCHSET01A2EFD1007009167B7 /* WatchSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = WATCHSET01B2EFD1007009167B7 /* WatchSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,7 +114,7 @@
 		30D04AC668556D4186EA9F87 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31E61ADECD5FF68699C3AC49 /* Pods-spelling-bee iOS App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spelling-bee iOS App.debug.xcconfig"; path = "Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App.debug.xcconfig"; sourceTree = "<group>"; };
 		3A48959F168D4811792C017D /* WatchSyncHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchSyncHelper.swift; sourceTree = "<group>"; };
-		453B059DC2F6A8D40BC0D069 /* WatchSpeechService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchSpeechService.swift; sourceTree = "<group>"; };
+		3AB71FBE2F1CB265002D6986 /* spelling-bee iOS App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "spelling-bee iOS App.entitlements"; sourceTree = "<group>"; };
 		45DF2A1DF38A45780AF203D1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS11.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		53B2CB4A2EFA4E17009167B7 /* spelling-bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		53B2CC002EFA6000009167B7 /* spelling-bee iOS App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "spelling-bee iOS App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,11 +153,18 @@
 		9670037D8EBFE05D21B88B8B /* Audio */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; path = Audio; sourceTree = "<group>"; };
 		A76E914314266D7F94B9E0EB /* Pods_spelling_bee_iOS_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spelling_bee_iOS_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACF6BE9604A3218453139B52 /* SpellFlare Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SpellFlare Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF32531B97AF4BADAD29C8A7 /* Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
+		CF32531B97AF4BADAD29C8A7 /* Resources/Audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/Audio; sourceTree = "<group>"; };
+		COINS001B2EFD1001009167B7 /* CoinsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsService.swift; sourceTree = "<group>"; };
+		COINS002B2EFD1002009167B7 /* GameCenterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterService.swift; sourceTree = "<group>"; };
+		COINS003B2EFD1003009167B7 /* CoinsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsDisplayView.swift; sourceTree = "<group>"; };
+		COINS004B2EFD1004009167B7 /* CoinsEarnedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsEarnedView.swift; sourceTree = "<group>"; };
+		COINS005B2EFD1005009167B7 /* WatchPaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchPaywallView.swift; sourceTree = "<group>"; };
+		COINS006B2EFD1006009167B7 /* WatchCoinsDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchCoinsDisplayView.swift; sourceTree = "<group>"; };
 		D278C0DEE0547EE5CAE5ABFD /* WatchHomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchHomeView.swift; sourceTree = "<group>"; };
 		DF7076FE5E396EB00641C227 /* WatchGameViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WatchGameViewModel.swift; sourceTree = "<group>"; };
 		E2C1F1867E7E50C292183A2D /* SpellFlare-Watch.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = "SpellFlare-Watch.entitlements"; sourceTree = "<group>"; };
 		F6593BCA60835766DBD4EC26 /* SpellFlareWatchApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SpellFlareWatchApp.swift; sourceTree = "<group>"; };
+		WATCHSET01B2EFD1007009167B7 /* WatchSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +199,9 @@
 				D278C0DEE0547EE5CAE5ABFD /* WatchHomeView.swift */,
 				5738560D4D15E3890863E1C3 /* WatchGameView.swift */,
 				30CEA0D30E0BADC4FC4EA8FB /* WatchLevelCompleteView.swift */,
+				COINS005B2EFD1005009167B7 /* WatchPaywallView.swift */,
+				WATCHSET01B2EFD1007009167B7 /* WatchSettingsView.swift */,
+				COINS006B2EFD1006009167B7 /* WatchCoinsDisplayView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,7 +209,6 @@
 		37057D0189093C11CC2BAF97 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				453B059DC2F6A8D40BC0D069 /* WatchSpeechService.swift */,
 				0A4FB345F0C6EC1CA233AE06 /* WatchAudioService.swift */,
 				3A48959F168D4811792C017D /* WatchSyncHelper.swift */,
 				2E1AAD1AED6AD2DAD296A88B /* WatchWordBankService.swift */,
@@ -229,6 +245,7 @@
 		53B2CC202EFA6010009167B7 /* spelling-bee iOS App */ = {
 			isa = PBXGroup;
 			children = (
+				3AB71FBE2F1CB265002D6986 /* spelling-bee iOS App.entitlements */,
 				53B2CC102EFA6000009167B7 /* spelling_bee_iOS_App.swift */,
 				53B2CC112EFA6001009167B7 /* ContentView.swift */,
 				53B2CC212EFA6011009167B7 /* Models */,
@@ -236,7 +253,7 @@
 				53B2CC232EFA6013009167B7 /* ViewModels */,
 				53B2CC242EFA6014009167B7 /* Views */,
 				53B2CC612EFA7001009167B7 /* Assets.xcassets */,
-				CF32531B97AF4BADAD29C8A7 /* Audio */,
+				CF32531B97AF4BADAD29C8A7 /* Resources/Audio */,
 			);
 			path = "spelling-bee iOS App";
 			sourceTree = "<group>";
@@ -316,6 +333,8 @@
 			isa = PBXGroup;
 			children = (
 				53B2CD042EFB0003009167B7 /* ParentGateView.swift */,
+				COINS003B2EFD1003009167B7 /* CoinsDisplayView.swift */,
+				COINS004B2EFD1004009167B7 /* CoinsEarnedView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -360,6 +379,8 @@
 			children = (
 				53B2CF032EFD0003009167B7 /* LocalCacheService.swift */,
 				53B2CF052EFD0005009167B7 /* SyncCoordinator.swift */,
+				COINS001B2EFD1001009167B7 /* CoinsService.swift */,
+				COINS002B2EFD1002009167B7 /* GameCenterService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -587,7 +608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53B2CC602EFA7000009167B7 /* Assets.xcassets in Resources */,
-				B66F95FC3EAC45E1BFA1E7E4 /* Audio in Resources */,
+				B66F95FC3EAC45E1BFA1E7E4 /* Resources/Audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,9 +646,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -664,9 +689,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spelling-bee iOS App/Pods-spelling-bee iOS App-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -705,6 +734,10 @@
 				53B2CF132EFD0013009167B7 /* LocalCacheService.swift in Sources */,
 				53B2CF152EFD0015009167B7 /* SyncCoordinator.swift in Sources */,
 				53B2CF272EFD0027009167B7 /* PhoneSyncHelper.swift in Sources */,
+				COINS001A2EFD1001009167B7 /* CoinsService.swift in Sources */,
+				COINS002A2EFD1002009167B7 /* GameCenterService.swift in Sources */,
+				COINS003A2EFD1003009167B7 /* CoinsDisplayView.swift in Sources */,
+				COINS004A2EFD1004009167B7 /* CoinsEarnedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,7 +764,6 @@
 			files = (
 				DA799CAD5B44CCE5A4B3B60F /* SpellFlareWatchApp.swift in Sources */,
 				EC8324B6305A824D393668EB /* ContentView.swift in Sources */,
-				A64A911AF36D048A7723B3C9 /* WatchSpeechService.swift in Sources */,
 				4E9076E94B986757FBAC52AE /* WatchAudioService.swift in Sources */,
 				AE98083BDD798CDB67DD227B /* WatchSyncHelper.swift in Sources */,
 				53BA2AFB3990417344B3D735 /* WatchWordBankService.swift in Sources */,
@@ -744,6 +776,10 @@
 				B837E42A87BCC93824D7142E /* LocalCacheService.swift in Sources */,
 				51D38BC2B724CF8A31C5707C /* UserProfile.swift in Sources */,
 				F889CB2D68BA5D80DE4E5D7D /* Word.swift in Sources */,
+				COINS001C2EFD1001009167B7 /* CoinsService.swift in Sources */,
+				COINS005A2EFD1005009167B7 /* WatchPaywallView.swift in Sources */,
+				COINS006A2EFD1006009167B7 /* WatchCoinsDisplayView.swift in Sources */,
+				WATCHSET01A2EFD1007009167B7 /* WatchSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,6 +959,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "spelling-bee iOS App/spelling-bee iOS App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F5D5362ZUD;
@@ -941,7 +978,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -957,6 +994,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "spelling-bee iOS App/spelling-bee iOS App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F5D5362ZUD;
@@ -975,7 +1013,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1083,7 +1121,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 3.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1091,7 +1129,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -1114,7 +1152,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.raves.spelling-bee-ios.watchkitapp";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1122,7 +1160,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 9.1;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};

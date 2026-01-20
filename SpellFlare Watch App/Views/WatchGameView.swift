@@ -41,7 +41,8 @@ struct WatchGameView: View {
                         .onAppear {
                             appState.showLevelComplete(
                                 level: viewModel.completedLevel,
-                                score: viewModel.finalScore
+                                score: viewModel.finalScore,
+                                coinsEarned: viewModel.coinsEarned
                             )
                             syncHelper.sendLevelCompleted(level)
                         }
@@ -52,6 +53,18 @@ struct WatchGameView: View {
 
             Spacer()
         }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.4, green: 0.2, blue: 0.9),
+                    Color(red: 0.3, green: 0.15, blue: 0.7)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             let grade = syncHelper.profile?.grade ?? 1
             viewModel.startLevel(level: level, grade: grade)
@@ -74,7 +87,7 @@ struct GameHeaderView: View {
             // Exit button
             Button(action: onExit) {
                 Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.gray)
+                    .foregroundColor(.white.opacity(0.6))
             }
             .buttonStyle(.plain)
 
@@ -83,7 +96,7 @@ struct GameHeaderView: View {
             // Level
             Text("Lvl \(level)")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(.white.opacity(0.7))
 
             Spacer()
 
@@ -99,11 +112,17 @@ struct GameHeaderView: View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .fill(Color.gray.opacity(0.3))
+                    .fill(Color.white.opacity(0.2))
                     .frame(height: 4)
 
                 Rectangle()
-                    .fill(Color.cyan)
+                    .fill(
+                        LinearGradient(
+                            colors: [.cyan, .white],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                     .frame(width: geo.size.width * progress, height: 4)
             }
             .cornerRadius(2)
@@ -118,48 +137,78 @@ struct GameHeaderView: View {
 struct WordPresentingView: View {
     @ObservedObject var viewModel: WatchGameViewModel
     @ObservedObject var audioService = WatchAudioService.shared
+    @State private var showSentencePicker = false
 
     var body: some View {
-        VStack(spacing: 16) {
-            // Speaker animation
-            Image(systemName: audioService.isPlaying ? "speaker.wave.3.fill" : "speaker.fill")
-                .font(.system(size: 40))
-                .foregroundColor(.cyan)
-
-            Text("Listen...")
-                .font(.headline)
-                .foregroundColor(.secondary)
-
-            // Action buttons
+        VStack(spacing: 8) {
+            // Speaker icon with repeat button on the left
             HStack(spacing: 12) {
-                // Repeat button
+                // Repeat button (small, on left)
                 Button {
                     viewModel.repeatWord()
                 } label: {
                     Image(systemName: "arrow.clockwise")
-                        .font(.title3)
-                        .frame(width: 44, height: 44)
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(22)
+                        .font(.system(size: 14))
+                        .foregroundColor(.white)
+                        .frame(width: 28, height: 28)
+                        .background(Color.white.opacity(0.2))
+                        .cornerRadius(14)
                 }
                 .buttonStyle(.plain)
 
-                // Go/Spell button
+                // Speaker animation
+                Image(systemName: audioService.isPlaying ? "speaker.wave.3.fill" : "speaker.fill")
+                    .font(.system(size: 32))
+                    .foregroundColor(.cyan)
+            }
+
+            Text("Listen...")
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.7))
+
+            // Action buttons: Sentence and Spell side by side
+            HStack(spacing: 6) {
+                // Sentence button
+                Button {
+                    showSentencePicker = true
+                } label: {
+                    HStack(spacing: 3) {
+                        Image(systemName: "text.bubble")
+                            .font(.system(size: 11))
+                        Text("Sentence")
+                            .font(.system(size: 11, weight: .medium))
+                    }
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(10)
+                }
+                .buttonStyle(.plain)
+
+                // Spell button
                 Button {
                     viewModel.startSpelling()
                 } label: {
-                    HStack {
-                        Image(systemName: "mic.fill")
+                    HStack(spacing: 3) {
+                        Image(systemName: "keyboard")
+                            .font(.system(size: 11))
                         Text("Spell")
+                            .font(.system(size: 11, weight: .medium))
                     }
-                    .font(.headline)
                     .foregroundColor(.black)
-                    .padding(.horizontal, 16)
+                    .frame(maxWidth: .infinity)
                     .padding(.vertical, 10)
                     .background(Color.cyan)
-                    .cornerRadius(20)
+                    .cornerRadius(10)
                 }
                 .buttonStyle(.plain)
+            }
+            .padding(.horizontal, 8)
+        }
+        .sheet(isPresented: $showSentencePicker) {
+            if let word = viewModel.currentWord {
+                WatchSentencePickerSheet(word: word)
             }
         }
     }
@@ -168,84 +217,39 @@ struct WordPresentingView: View {
 // MARK: - Spelling Input View
 struct SpellingInputView: View {
     @ObservedObject var viewModel: WatchGameViewModel
-    @ObservedObject var speechService = WatchSpeechService.shared
 
     @State private var showKeyboardInput = false
     @State private var keyboardText = ""
 
     var body: some View {
         VStack(spacing: 12) {
-            // Mic button
-            Button {
-                if speechService.isListening {
-                    speechService.stopListening()
-                } else {
-                    speechService.startListening()
-                }
-            } label: {
-                ZStack {
-                    // Pulse animation when listening
-                    if speechService.isListening {
-                        Circle()
-                            .fill(Color.red.opacity(0.3))
-                            .frame(width: 80, height: 80)
-                            .scaleEffect(speechService.isListening ? 1.2 : 1.0)
-                            .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: speechService.isListening)
-                    }
+            // On watchOS, keyboard is the primary input method
+            // Speech framework is not available on watchOS
 
-                    Circle()
-                        .fill(speechService.isListening ? Color.red : Color.cyan)
-                        .frame(width: 60, height: 60)
-
-                    Image(systemName: speechService.isListening ? "stop.fill" : "mic.fill")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                }
-            }
-            .buttonStyle(.plain)
-
-            // Recognized letters
-            if !speechService.recognizedLetters.isEmpty {
-                Text(formatLetters(speechService.recognizedLetters))
-                    .font(.system(size: 20, weight: .bold, design: .monospaced))
-                    .foregroundColor(.cyan)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-            }
-
-            // Status text
-            Text(speechService.isListening ? "Listening..." : "Tap mic to spell")
+            Text("Spell the word")
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundColor(.white.opacity(0.7))
 
-            // Submit button (when we have letters)
-            if !speechService.recognizedLetters.isEmpty && !speechService.isListening {
-                Button {
-                    viewModel.submitSpelling(speechService.recognizedLetters)
-                } label: {
-                    Text("Submit")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(Color.green)
-                        .cornerRadius(8)
-                }
-                .buttonStyle(.plain)
-            }
-
-            // Keyboard fallback (small button)
+            // Primary action - Type spelling
             Button {
                 showKeyboardInput = true
             } label: {
                 HStack {
                     Image(systemName: "keyboard")
-                    Text("Type")
+                    Text("Type Spelling")
                 }
-                .font(.caption2)
-                .foregroundColor(.gray)
+                .font(.headline)
+                .foregroundColor(.black)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(Color.cyan)
+                .cornerRadius(12)
             }
             .buttonStyle(.plain)
+
+            Text("Use keyboard to spell")
+                .font(.caption2)
+                .foregroundColor(.white.opacity(0.5))
         }
         .sheet(isPresented: $showKeyboardInput) {
             KeyboardInputSheet(
@@ -257,10 +261,6 @@ struct SpellingInputView: View {
                 }
             )
         }
-    }
-
-    private func formatLetters(_ letters: String) -> String {
-        letters.map { String($0) }.joined(separator: " - ")
     }
 }
 
@@ -278,7 +278,6 @@ struct KeyboardInputSheet: View {
                 .textFieldStyle(.plain)
                 .font(.system(size: 20, weight: .bold, design: .monospaced))
                 .multilineTextAlignment(.center)
-                .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
 
             Button("Submit") {
@@ -307,8 +306,8 @@ struct FeedbackResultView: View {
                     .foregroundColor(.orange)
             }
 
-            // Word display
-            if let word = viewModel.currentWord {
+            // Word display - use lastAnsweredWord to show the word that was just answered
+            if let word = viewModel.lastAnsweredWord {
                 Text(word.text.uppercased())
                     .font(.system(size: 18, weight: .bold, design: .monospaced))
                     .foregroundColor(.white)
@@ -322,6 +321,7 @@ struct FeedbackResultView: View {
                     } label: {
                         Text("Retry")
                             .font(.caption)
+                            .foregroundColor(.black)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .background(Color.cyan)
@@ -337,12 +337,107 @@ struct FeedbackResultView: View {
                             .foregroundColor(.orange)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
-                            .background(Color.gray.opacity(0.3))
+                            .background(Color.white.opacity(0.2))
                             .cornerRadius(8)
                     }
                     .buttonStyle(.plain)
                 }
             }
+        }
+    }
+}
+
+// MARK: - Sentence Picker Sheet
+struct WatchSentencePickerSheet: View {
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var audioService = WatchAudioService.shared
+    @State private var playingSentenceNumber: Int? = nil
+    let word: WatchWord
+
+    private var sentences: [WatchWordSentence] {
+        WatchWordBankService.shared.getSentences(for: word)
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 12) {
+                Text("Use in Sentence")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.top, 8)
+
+                ForEach(sentences) { sentence in
+                    Button {
+                        playSentence(sentence)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(sentence.displayLabel)
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(.white)
+                                Text("Tap to hear")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(.white.opacity(0.6))
+                            }
+                            Spacer()
+                            // Only show speaker icon on the sentence that's playing
+                            if audioService.isPlaying && playingSentenceNumber == sentence.sentenceNumber {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.cyan)
+                            } else {
+                                Image(systemName: "play.circle.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.cyan)
+                            }
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 10)
+                        .background(Color.white.opacity(0.15))
+                        .cornerRadius(10)
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Done")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.black)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(Color.cyan)
+                        .cornerRadius(10)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 8)
+            }
+            .padding(.horizontal, 12)
+        }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.4, green: 0.2, blue: 0.9),
+                    Color(red: 0.3, green: 0.15, blue: 0.7)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
+        .toolbar(.hidden, for: .navigationBar)
+    }
+
+    private func playSentence(_ sentence: WatchWordSentence) {
+        playingSentenceNumber = sentence.sentenceNumber
+        audioService.playSentence(
+            sentence.word,
+            difficulty: sentence.difficulty,
+            number: sentence.sentenceNumber
+        ) {
+            // Reset when playback completes
+            playingSentenceNumber = nil
         }
     }
 }

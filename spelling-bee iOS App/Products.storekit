@@ -18,6 +18,21 @@
       "productID" : "remove_ads",
       "referenceName" : "Remove Ads",
       "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "2",
+      "localizations" : [
+        {
+          "description" : "Unlock levels 6-50 on Apple Watch",
+          "displayName" : "Unlock Watch Levels",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "unlock_watch",
+      "referenceName" : "Unlock Watch Levels",
+      "type" : "NonConsumable"
     }
   ],
   "settings" : {

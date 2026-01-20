@@ -12,94 +12,154 @@ struct WatchHomeView: View {
     @EnvironmentObject var syncHelper: WatchSyncHelper
 
     @State private var selectedLevel: Int = 1
+    @State private var showPaywall = false
 
     var body: some View {
-        VStack(spacing: 8) {
-            // Header
-            HStack {
-                Text("SpellFlare")
-                    .font(.headline)
-                    .foregroundColor(.cyan)
+        GeometryReader { geometry in
+            let isSmallWatch = geometry.size.height < 180
+            let ringSize: CGFloat = isSmallWatch ? 70 : 90
+            let levelFontSize: CGFloat = isSmallWatch ? 22 : 28
+            let buttonPadding: CGFloat = isSmallWatch ? 6 : 10
 
-                Spacer()
-
-                // Sync indicator
-                if syncHelper.isPhoneReachable {
-                    Image(systemName: "iphone")
-                        .font(.caption)
-                        .foregroundColor(.green)
-                } else {
-                    Image(systemName: "iphone.slash")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-            }
-
-            // Grade display
-            Text("Grade \(syncHelper.profile?.grade ?? 1)")
-                .font(.caption)
-                .foregroundColor(.secondary)
-
-            Spacer()
-
-            // Level selection with progress ring
-            ZStack {
-                // Progress ring
-                Circle()
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 8)
-                    .frame(width: 100, height: 100)
-
-                Circle()
-                    .trim(from: 0, to: progressForCurrentGrade)
-                    .stroke(Color.cyan, style: StrokeStyle(lineWidth: 8, lineCap: .round))
-                    .frame(width: 100, height: 100)
-                    .rotationEffect(.degrees(-90))
-
-                // Level button
-                Button {
-                    appState.startGame(level: currentLevel)
-                } label: {
-                    VStack(spacing: 4) {
-                        Text("Level")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-
-                        Text("\(currentLevel)")
-                            .font(.system(size: 32, weight: .bold))
-                            .foregroundColor(.white)
+            VStack(spacing: isSmallWatch ? 2 : 4) {
+                // Header with settings and coins
+                HStack {
+                    // Settings button
+                    Button {
+                        appState.navigateToSettings()
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: isSmallWatch ? 14 : 16))
+                            .foregroundColor(.white.opacity(0.8))
                     }
+                    .buttonStyle(.plain)
+
+                    Spacer()
+
+                    // Coins display
+                    WatchCoinsDisplayView(coins: syncHelper.profile?.totalCoins ?? 0, compact: isSmallWatch)
+                }
+                .padding(.horizontal, 8)
+                .padding(.top, isSmallWatch ? 2 : 4)
+
+                Spacer(minLength: 0)
+
+                // Level selection with progress ring
+                ZStack {
+                    // Progress ring
+                    Circle()
+                        .stroke(Color.white.opacity(0.2), lineWidth: isSmallWatch ? 5 : 6)
+                        .frame(width: ringSize, height: ringSize)
+
+                    Circle()
+                        .trim(from: 0, to: progressForCurrentGrade)
+                        .stroke(
+                            LinearGradient(
+                                colors: [.cyan, .white],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            style: StrokeStyle(lineWidth: isSmallWatch ? 5 : 6, lineCap: .round)
+                        )
+                        .frame(width: ringSize, height: ringSize)
+                        .rotationEffect(.degrees(-90))
+
+                    // Level button
+                    Button {
+                        startLevelWithGating(currentLevel)
+                    } label: {
+                        VStack(spacing: 1) {
+                            Text("Level")
+                                .font(.system(size: isSmallWatch ? 9 : 11))
+                                .foregroundColor(.white.opacity(0.7))
+
+                            Text("\(currentLevel)")
+                                .font(.system(size: levelFontSize, weight: .bold))
+                                .foregroundColor(.white)
+
+                            // Lock indicator for gated levels
+                            if currentLevel > 5 && !syncHelper.isWatchUnlocked {
+                                Image(systemName: "lock.fill")
+                                    .font(.system(size: isSmallWatch ? 8 : 10))
+                                    .foregroundColor(.yellow)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                // Grade indicator
+                Text("Grade \(syncHelper.profile?.grade ?? 1)")
+                    .font(.system(size: isSmallWatch ? 10 : 11))
+                    .foregroundColor(.white.opacity(0.7))
+                    .padding(.top, 1)
+
+                Spacer(minLength: 0)
+
+                // Start button
+                Button {
+                    startLevelWithGating(currentLevel)
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: isSmallWatch ? 11 : 14))
+                        Text("Start")
+                            .font(.system(size: isSmallWatch ? 13 : 16, weight: .semibold))
+                    }
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, buttonPadding)
+                    .background(Color.cyan)
+                    .cornerRadius(isSmallWatch ? 8 : 10)
                 }
                 .buttonStyle(.plain)
-            }
+                .padding(.horizontal, 8)
 
-            Spacer()
+                // Completed levels count
+                HStack(spacing: 4) {
+                    Text("\(completedLevelsCount)/50")
+                        .font(.system(size: isSmallWatch ? 9 : 11))
+                        .foregroundColor(.white.opacity(0.6))
 
-            // Start button
-            Button {
-                appState.startGame(level: currentLevel)
-            } label: {
-                HStack {
-                    Image(systemName: "play.fill")
-                    Text("Start")
+                    if !syncHelper.isWatchUnlocked && currentLevel > 5 {
+                        Image(systemName: "lock.fill")
+                            .font(.system(size: isSmallWatch ? 7 : 9))
+                            .foregroundColor(.yellow)
+                    }
                 }
-                .font(.headline)
-                .foregroundColor(.black)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 12)
-                .background(Color.cyan)
-                .cornerRadius(12)
+                .padding(.top, 1)
+                .padding(.bottom, isSmallWatch ? 2 : 4)
             }
-            .buttonStyle(.plain)
-
-            // Completed levels count
-            Text("\(completedLevelsCount)/50 completed")
-                .font(.caption2)
-                .foregroundColor(.secondary)
         }
-        .padding()
+        .background(
+            LinearGradient(
+                colors: [
+                    Color(red: 0.4, green: 0.2, blue: 0.9),
+                    Color(red: 0.3, green: 0.15, blue: 0.7)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
+        .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             selectedLevel = currentLevel
         }
+        .sheet(isPresented: $showPaywall) {
+            WatchPaywallView()
+        }
+    }
+
+    // MARK: - Level Gating
+
+    private func startLevelWithGating(_ level: Int) {
+        // Gate levels 6+ for non-premium users
+        if level > 5 && !syncHelper.isWatchUnlocked {
+            showPaywall = true
+            return
+        }
+        appState.startGame(level: level)
     }
 
     // MARK: - Computed Properties

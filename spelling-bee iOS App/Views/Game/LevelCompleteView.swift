@@ -65,6 +65,10 @@ struct LevelCompleteView: View {
                         .font(.subheadline)
                         .foregroundColor(.white.opacity(0.8))
                         .padding(.top, 8)
+
+                    // Coins earned animation
+                    FloatingCoinsEarnedView(amount: viewModel.coinsEarned)
+                        .padding(.top, 12)
                 }
                 .opacity(textOpacity)
 
@@ -75,7 +79,7 @@ struct LevelCompleteView: View {
                     if level < 50 {
                         Button {
                             handleNavigation {
-                                appState.completeLevel(level)
+                                appState.completeLevelWithCoins(level, coinsEarned: viewModel.coinsEarned)
                                 appState.navigateToGame(level: level + 1)
                             }
                         } label: {
@@ -91,7 +95,7 @@ struct LevelCompleteView: View {
 
                     Button {
                         handleNavigation {
-                            appState.completeLevel(level)
+                            appState.completeLevelWithCoins(level, coinsEarned: viewModel.coinsEarned)
                             appState.navigateToHome()
                         }
                     } label: {

@@ -14,16 +14,27 @@ struct UserProfile: Codable, Equatable {
     var completedLevelsByGrade: [Int: Set<Int>]
     var currentLevelByGrade: [Int: Int]
 
+    // Coins system
+    var totalCoins: Int = 0
+    var coinsMigrationCompleted: Bool = false
+
     init(name: String, grade: Int) {
         self.name = name
         self.grade = max(1, min(7, grade))
         self.completedLevelsByGrade = [:]
         self.currentLevelByGrade = [:]
+        self.totalCoins = 0
+        self.coinsMigrationCompleted = false
         // Initialize all grades with level 1
         for g in 1...7 {
             currentLevelByGrade[g] = 1
             completedLevelsByGrade[g] = []
         }
+    }
+
+    // Computed property for total completed levels across all grades
+    var totalCompletedLevelsCount: Int {
+        completedLevelsByGrade.values.reduce(0) { $0 + $1.count }
     }
 
     // Computed property for current grade's completed levels
@@ -99,10 +110,15 @@ struct UserProfile: Codable, Equatable {
                 completedLevelsByGrade[g] = []
             }
         }
+
+        // Migration for coins - use defaults if not present
+        totalCoins = (try? container.decode(Int.self, forKey: .totalCoins)) ?? 0
+        coinsMigrationCompleted = (try? container.decode(Bool.self, forKey: .coinsMigrationCompleted)) ?? false
     }
 
     private enum CodingKeys: String, CodingKey {
         case name, grade, completedLevelsByGrade, currentLevelByGrade, completedLevels, currentLevel
+        case totalCoins, coinsMigrationCompleted
     }
 
     func encode(to encoder: Encoder) throws {
@@ -111,5 +127,7 @@ struct UserProfile: Codable, Equatable {
         try container.encode(grade, forKey: .grade)
         try container.encode(completedLevelsByGrade, forKey: .completedLevelsByGrade)
         try container.encode(currentLevelByGrade, forKey: .currentLevelByGrade)
+        try container.encode(totalCoins, forKey: .totalCoins)
+        try container.encode(coinsMigrationCompleted, forKey: .coinsMigrationCompleted)
     }
 }

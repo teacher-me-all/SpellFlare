@@ -35,6 +35,9 @@ class GameViewModel: ObservableObject {
     @Published var currentWordRetryCount: Int = 0
     @Published var hasSeenKeyboardHint: Bool = false
 
+    // MARK: - Coins Tracking
+    @Published var levelWrongAttempts: Int = 0  // Total wrong attempts for the entire level
+
     // MARK: - Give Up Animation State
     @Published var isSpellingOut = false
     @Published var currentSpellingLetters: [String] = []
@@ -69,6 +72,11 @@ class GameViewModel: ObservableObject {
         currentWordRetryCount >= 2 && !hasSeenKeyboardHint
     }
 
+    /// Coins earned for this level based on wrong attempts
+    var coinsEarned: Int {
+        CoinsService.shared.calculateCoins(wrongAttempts: levelWrongAttempts)
+    }
+
     // MARK: - Game Flow
 
     func startLevel(level: Int, grade: Int) {
@@ -95,6 +103,9 @@ class GameViewModel: ObservableObject {
     private func beginActualTest() {
         let words = wordBank.getWords(grade: pendingGrade, level: pendingLevel, count: 15)
         session = GameSession(level: pendingLevel, grade: pendingGrade, words: words)
+
+        // Reset level wrong attempts for coins tracking
+        levelWrongAttempts = 0
 
         // Set difficulty for audio playback
         let difficulty = min(pendingGrade + (pendingLevel - 1) / 10, 12)
@@ -181,8 +192,9 @@ class GameViewModel: ObservableObject {
         phase = .feedback
         showRetryOption = true
 
-        // Increment retry count
+        // Increment retry count and level wrong attempts for coins
         currentWordRetryCount += 1
+        levelWrongAttempts += 1
 
         let encouragements = [
             "Nice try!",

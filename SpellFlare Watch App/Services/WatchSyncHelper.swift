@@ -17,6 +17,7 @@ class WatchSyncHelper: NSObject, ObservableObject {
     @Published var isPhoneReachable = false
     @Published var lastSyncDate: Date?
     @Published var hasPendingChanges = false
+    @Published var isWatchUnlocked: Bool = false  // Premium state synced from iPhone
 
     // MARK: - Private Properties
     private var session: WCSession?
@@ -67,9 +68,11 @@ class WatchSyncHelper: NSObject, ObservableObject {
         do {
             let syncable = try JSONDecoder().decode(SyncableProfile.self, from: data)
             self.profile = syncable.profile
+            self.isWatchUnlocked = syncable.isWatchUnlocked  // Extract premium state
             LocalCacheService.shared.saveSyncableProfile(syncable)
+            savePremiumState(syncable.isWatchUnlocked)  // Persist locally
             self.lastSyncDate = Date()
-            print("Profile synced from iPhone: \(syncable.profile.name)")
+            print("Profile synced from iPhone: \(syncable.profile.name), premium: \(syncable.isWatchUnlocked)")
         } catch {
             print("Failed to decode profile: \(error)")
             loadLocalProfile()
@@ -80,7 +83,8 @@ class WatchSyncHelper: NSObject, ObservableObject {
     private func loadLocalProfile() {
         if let syncable = LocalCacheService.shared.loadSyncableProfile() {
             self.profile = syncable.profile
-            print("Loaded local profile: \(syncable.profile.name)")
+            self.isWatchUnlocked = syncable.isWatchUnlocked
+            print("Loaded local profile: \(syncable.profile.name), premium: \(syncable.isWatchUnlocked)")
         } else {
             // Create default profile for standalone mode
             let defaultProfile = UserProfile(name: "Player", grade: 1)
@@ -88,6 +92,27 @@ class WatchSyncHelper: NSObject, ObservableObject {
             let syncable = SyncableProfile(profile: defaultProfile, deviceIdentifier: DeviceIdentifier.current)
             LocalCacheService.shared.saveSyncableProfile(syncable)
             print("Created default profile")
+        }
+        // Also load persisted premium state
+        loadPremiumState()
+    }
+
+    // MARK: - Premium State Persistence
+
+    private let premiumKey = "watch_isWatchUnlocked"
+
+    /// Save premium state to UserDefaults for persistence
+    private func savePremiumState(_ isWatchUnlocked: Bool) {
+        UserDefaults.standard.set(isWatchUnlocked, forKey: premiumKey)
+        print("Saved premium state: \(isWatchUnlocked)")
+    }
+
+    /// Load premium state from UserDefaults
+    private func loadPremiumState() {
+        let savedPremium = UserDefaults.standard.bool(forKey: premiumKey)
+        if savedPremium {
+            self.isWatchUnlocked = savedPremium
+            print("Loaded persisted premium state: \(savedPremium)")
         }
     }
 
@@ -216,17 +241,21 @@ extension WatchSyncHelper: WCSessionDelegate {
             if let data = message["profile"] as? Data,
                let syncable = try? JSONDecoder().decode(SyncableProfile.self, from: data) {
                 self.profile = syncable.profile
+                self.isWatchUnlocked = syncable.isWatchUnlocked  // Extract premium state
                 LocalCacheService.shared.saveSyncableProfile(syncable)
+                savePremiumState(syncable.isWatchUnlocked)  // Persist locally
                 self.lastSyncDate = Date()
-                print("Profile updated from iPhone")
+                print("Profile updated from iPhone, premium: \(syncable.isWatchUnlocked)")
             }
 
         case "gradeChanged":
             if let data = message["profile"] as? Data,
                let syncable = try? JSONDecoder().decode(SyncableProfile.self, from: data) {
                 self.profile = syncable.profile
+                self.isWatchUnlocked = syncable.isWatchUnlocked  // Extract premium state
                 LocalCacheService.shared.saveSyncableProfile(syncable)
-                print("Grade changed from iPhone: \(syncable.profile.grade)")
+                savePremiumState(syncable.isWatchUnlocked)  // Persist locally
+                print("Grade changed from iPhone: \(syncable.profile.grade), premium: \(syncable.isWatchUnlocked)")
             }
 
         default:

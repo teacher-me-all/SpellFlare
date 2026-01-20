@@ -3,7 +3,7 @@
 //  spelling-bee iOS App
 //
 //  Manages In-App Purchases using StoreKit 2.
-//  Handles "Remove Ads" non-consumable purchase.
+//  Handles "Remove Ads" and "Unlock Watch" non-consumable purchases.
 //
 
 import Foundation
@@ -15,6 +15,7 @@ class StoreManager: ObservableObject {
 
     // MARK: - Product IDs
     static let removeAdsProductId = "remove_ads"
+    static let unlockWatchProductId = "unlock_watch"
 
     // MARK: - Debug Mode (set to false for production)
     #if DEBUG
@@ -35,7 +36,16 @@ class StoreManager: ObservableObject {
             }
         }
     }
+    @Published private(set) var isWatchUnlocked: Bool = false {
+        didSet {
+            // Persist debug purchase state (not in UI testing mode)
+            if debugMode && !uiTestingMode {
+                UserDefaults.standard.set(isWatchUnlocked, forKey: "debug_watch_unlocked")
+            }
+        }
+    }
     @Published private(set) var removeAdsProduct: Product?
+    @Published private(set) var unlockWatchProduct: Product?
     @Published private(set) var purchaseInProgress: Bool = false
     @Published private(set) var purchaseError: String?
 
@@ -51,6 +61,7 @@ class StoreManager: ObservableObject {
         // Load debug state if in debug mode
         if debugMode {
             isAdsRemoved = UserDefaults.standard.bool(forKey: "debug_ads_removed")
+            isWatchUnlocked = UserDefaults.standard.bool(forKey: "debug_watch_unlocked")
         }
 
         // Start listening for transaction updates
@@ -78,6 +89,7 @@ class StoreManager: ObservableObject {
             // Normal initialization
             if debugMode {
                 isAdsRemoved = UserDefaults.standard.bool(forKey: "debug_ads_removed")
+                isWatchUnlocked = UserDefaults.standard.bool(forKey: "debug_watch_unlocked")
             }
             updateListenerTask = listenForTransactions()
             Task {
@@ -95,8 +107,20 @@ class StoreManager: ObservableObject {
 
     func loadProducts() async {
         do {
-            let products = try await Product.products(for: [StoreManager.removeAdsProductId])
-            removeAdsProduct = products.first
+            let products = try await Product.products(for: [
+                StoreManager.removeAdsProductId,
+                StoreManager.unlockWatchProductId
+            ])
+            for product in products {
+                switch product.id {
+                case StoreManager.removeAdsProductId:
+                    removeAdsProduct = product
+                case StoreManager.unlockWatchProductId:
+                    unlockWatchProduct = product
+                default:
+                    break
+                }
+            }
         } catch {
             print("Failed to load products: \(error)")
         }
@@ -105,19 +129,28 @@ class StoreManager: ObservableObject {
     // MARK: - Check Entitlements
 
     func checkEntitlements() async {
-        // Check if user has the remove_ads entitlement
+        var foundAdsRemoved = false
+        var foundWatchUnlocked = false
+
+        // Check all current entitlements
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result {
-                if transaction.productID == StoreManager.removeAdsProductId {
-                    isAdsRemoved = true
-                    return
+                switch transaction.productID {
+                case StoreManager.removeAdsProductId:
+                    foundAdsRemoved = true
+                case StoreManager.unlockWatchProductId:
+                    foundWatchUnlocked = true
+                default:
+                    break
                 }
             }
         }
-        isAdsRemoved = false
+
+        isAdsRemoved = foundAdsRemoved
+        isWatchUnlocked = foundWatchUnlocked
     }
 
-    // MARK: - Purchase
+    // MARK: - Purchase Remove Ads
 
     func purchaseRemoveAds() async -> Bool {
         // Debug mode: simulate purchase without StoreKit
@@ -180,13 +213,88 @@ class StoreManager: ObservableObject {
         }
     }
 
+    // MARK: - Purchase Unlock Watch
+
+    func purchaseUnlockWatch() async -> Bool {
+        // Debug mode: simulate purchase without StoreKit
+        if debugMode {
+            purchaseInProgress = true
+            purchaseError = nil
+            // Simulate brief delay
+            try? await Task.sleep(nanoseconds: 500_000_000)
+            isWatchUnlocked = true
+            purchaseInProgress = false
+            // Sync Watch unlock state
+            PhoneSyncHelper.shared.syncWatchUnlockState()
+            return true
+        }
+
+        guard let product = unlockWatchProduct else {
+            purchaseError = "Product not available. Please try again later."
+            return false
+        }
+
+        purchaseInProgress = true
+        purchaseError = nil
+
+        do {
+            let result = try await product.purchase()
+
+            switch result {
+            case .success(let verification):
+                // Verify the transaction cryptographically
+                if case .verified(let transaction) = verification {
+                    // Grant entitlement
+                    isWatchUnlocked = true
+                    // Finish the transaction
+                    await transaction.finish()
+                    purchaseInProgress = false
+
+                    // Sync Watch unlock state
+                    PhoneSyncHelper.shared.syncWatchUnlockState()
+
+                    return true
+                } else {
+                    // Verification failed - do not grant entitlement
+                    purchaseError = "Purchase verification failed"
+                    purchaseInProgress = false
+                    return false
+                }
+
+            case .userCancelled:
+                purchaseInProgress = false
+                return false
+
+            case .pending:
+                purchaseError = "Purchase pending approval"
+                purchaseInProgress = false
+                return false
+
+            @unknown default:
+                purchaseError = "Unknown purchase result"
+                purchaseInProgress = false
+                return false
+            }
+        } catch {
+            purchaseError = "Purchase failed: \(error.localizedDescription)"
+            purchaseInProgress = false
+            return false
+        }
+    }
+
     // MARK: - Restore Purchases
 
     func restorePurchases() async -> Bool {
         do {
             try await AppStore.sync()
             await checkEntitlements()
-            return isAdsRemoved
+
+            // Sync Watch unlock state if restored
+            if isWatchUnlocked {
+                PhoneSyncHelper.shared.syncWatchUnlockState()
+            }
+
+            return isAdsRemoved || isWatchUnlocked
         } catch {
             purchaseError = "Restore failed: \(error.localizedDescription)"
             return false
@@ -207,16 +315,34 @@ class StoreManager: ObservableObject {
     }
 
     private func handleVerifiedTransaction(_ transaction: Transaction) async {
-        if transaction.productID == StoreManager.removeAdsProductId {
+        switch transaction.productID {
+        case StoreManager.removeAdsProductId:
             await MainActor.run {
                 self.isAdsRemoved = true
             }
+        case StoreManager.unlockWatchProductId:
+            await MainActor.run {
+                self.isWatchUnlocked = true
+                // Sync Watch unlock state
+                PhoneSyncHelper.shared.syncWatchUnlockState()
+            }
+        default:
+            break
         }
     }
 
-    // MARK: - Formatted Price
+    // MARK: - Formatted Prices
 
-    var formattedPrice: String {
+    var formattedRemoveAdsPrice: String {
         removeAdsProduct?.displayPrice ?? "$0.99"
+    }
+
+    var formattedUnlockWatchPrice: String {
+        unlockWatchProduct?.displayPrice ?? "$0.99"
+    }
+
+    // Legacy compatibility
+    var formattedPrice: String {
+        formattedRemoveAdsPrice
     }
 }

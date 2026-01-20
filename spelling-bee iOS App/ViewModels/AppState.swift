@@ -29,6 +29,7 @@ class AppState: ObservableObject {
 
     private let persistence = PersistenceService.shared
     private let phoneSyncHelper = PhoneSyncHelper.shared
+    private let gameCenterService = GameCenterService.shared
     private var cancellables = Set<AnyCancellable>()
 
     /// Standard initializer for production use
@@ -36,6 +37,11 @@ class AppState: ObservableObject {
         self.uiTestingMode = false
         setupSyncObserver()
         loadProfile()
+
+        // Authenticate with Game Center for cloud backup
+        Task {
+            await gameCenterService.authenticate()
+        }
     }
 
     /// UI Testing initializer - allows configuring initial state
@@ -80,7 +86,12 @@ class AppState: ObservableObject {
             return
         }
 
-        if let savedProfile = persistence.loadProfile() {
+        if var savedProfile = persistence.loadProfile() {
+            // Run coins migration for existing users
+            if !savedProfile.coinsMigrationCompleted {
+                CoinsService.shared.migrateExistingProgress(profile: &savedProfile)
+                persistence.saveProfile(savedProfile)
+            }
             profile = savedProfile
             currentScreen = .home
         } else {
@@ -111,6 +122,39 @@ class AppState: ObservableObject {
         if let profile = profile, !uiTestingMode {
             persistence.saveProfile(profile)
             phoneSyncHelper.pushLocalChanges()
+        }
+    }
+
+    /// Award coins to the user and save profile
+    /// - Parameter amount: Number of coins to award
+    func awardCoins(_ amount: Int) {
+        guard var currentProfile = profile else { return }
+        CoinsService.shared.awardCoins(amount, to: &currentProfile)
+        profile = currentProfile
+        if !uiTestingMode {
+            persistence.saveProfile(currentProfile)
+            phoneSyncHelper.pushLocalChanges()
+        }
+    }
+
+    /// Complete a level and award coins in one operation
+    /// - Parameters:
+    ///   - level: The level completed
+    ///   - coinsEarned: Coins to award for this level
+    func completeLevelWithCoins(_ level: Int, coinsEarned: Int) {
+        profile?.completeLevel(level)
+        if var currentProfile = profile {
+            CoinsService.shared.awardCoins(coinsEarned, to: &currentProfile)
+            profile = currentProfile
+            if !uiTestingMode {
+                persistence.saveProfile(currentProfile)
+                phoneSyncHelper.pushLocalChanges()
+
+                // Backup to Game Center cloud
+                Task {
+                    await gameCenterService.backupCurrentProfile()
+                }
+            }
         }
     }
 
@@ -146,6 +190,16 @@ class AppState: ObservableObject {
             await MainActor.run {
                 if let syncedProfile = persistence.loadProfile() {
                     self.profile = syncedProfile
+                }
+            }
+
+            // Try to restore from Game Center if better data available
+            if await gameCenterService.restoreAndApplyIfBetter() {
+                await MainActor.run {
+                    if let restoredProfile = persistence.loadProfile() {
+                        self.profile = restoredProfile
+                        print("Applied Game Center cloud profile")
+                    }
                 }
             }
         }
